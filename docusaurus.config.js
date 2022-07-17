@@ -8,16 +8,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'CIS 4398 Documentation Template',
   tagline: 'Owls are cool',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://'+process.env.ORG_NAME+'.github.io/',
+  baseUrl: '/'+process.env.PROJECT_NAME+'/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: process.env.ORG_NAME, // Usually your GitHub org/user name.
+  projectName: process.env.PROJECT_NAME, // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -84,6 +84,12 @@ const config = {
         // ... other options
       },
     ],
+      [
+          "docusaurus2-dotenv",
+        {
+          systemvars: true,
+        },
+      ],
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
