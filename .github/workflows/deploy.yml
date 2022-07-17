@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ORG_NAME: ${GITHUB_REPOSITORY%/*}
-      PROJECT_NAME: ${GITHUB_REPOSITORY#*/}
+      ORG_NAME: ${{GITHUB_REPOSITORY%/*}}
+      PROJECT_NAME: ${{GITHUB_REPOSITORY#*/}}
       GIT_USER: ${{secrets.USER}}
       GIT_PASS: ${{secrets.TOKEN}}
     steps:
