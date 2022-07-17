@@ -19,6 +19,6 @@ jobs:
 
       - name: Deploy
         run: |
-          ORG_NAME=${GITHUB_REPOSITORY%/*} 
-          PROJECT_NAME=${GITHUB_REPOSITORY#*/}
+          export ORG_NAME=$(echo ${GITHUB_REPOSITORY%/*})
+          export PROJECT_NAME=$(echo ${GITHUB_REPOSITORY#*/})
           yarn deploy
