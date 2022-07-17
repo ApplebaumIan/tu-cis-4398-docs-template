@@ -7,14 +7,15 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  greeting_job:
+  deploy:
     runs-on: ubuntu-latest
     env:
-        ORG_NAME: ${{ github.event.repository.owner }}
-        PROJECT_NAME: ${{ github.event.repository.name }}
-        USE_SSH: true
+      ORG_NAME: ${{ github.event.repository.owner }}
+      PROJECT_NAME: ${{ github.event.repository.name }}
+      USE_SSH: true
     steps:
-      - name: "deploy"
-        run: yarn install && yarn deploy
+      - name: Install
+        run: yarn install
 
-    
+      - name: Deploy
+        run: yarn deploy
