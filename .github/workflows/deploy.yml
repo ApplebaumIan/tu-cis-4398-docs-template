@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ORG_NAME: ${{ github.event.repository.owner }}
-      PROJECT_NAME: ${{ github.event.repository.name }}
+      ORG_NAME: ${{github.repository}}
+      PROJECT_NAME: ${{github.owner}}
       USE_SSH: true
     steps:
       - name: Install
