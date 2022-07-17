@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,9 +26,9 @@ jobs:
         cache: 'npm'
     - run: yarn install
     - run: yarn deploy
-    env:
-      ORG_NAME: ${{ github.event.repository.owner }}
-      PROJECT_NAME: ${{ github.event.repository.name }}
-      USE_SSH: true
+      env:
+        ORG_NAME: ${{ github.event.repository.owner }}
+        PROJECT_NAME: ${{ github.event.repository.name }}
+        USE_SSH: true
   
     
