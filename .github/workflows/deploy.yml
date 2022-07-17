@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ORG_NAME: ${{github.repository}}
-      PROJECT_NAME: ${{github.owner}}
+      ORG_NAME: ${{github.repository.name}}
+      PROJECT_NAME: ${{github.repository.owner}}
       USE_SSH: true
     steps:
       - uses: actions/checkout@v3
