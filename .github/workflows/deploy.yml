@@ -27,8 +27,8 @@ jobs:
     - run: yarn install
     - run: yarn deploy
     env:
-      ORG_NAME: ${{ GITHUB_REPOSITORY_OWNER }}
-      PROJECT_NAME: ${{ $github.event.repository.name }}
+      ORG_NAME: ${{ github.event.repository.owner }}
+      PROJECT_NAME: ${{ github.event.repository.name }}
       USE_SSH: true
   
     
