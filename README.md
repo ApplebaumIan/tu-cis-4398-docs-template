@@ -1,41 +1,25 @@
-# Website
+# Project Name
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+## Keywords
 
-### Installation
+Section #, as well as any words that quickly give your peers insights into the application like programming language, development platform, type of application, etc.
 
-```
-$ yarn
-```
+## Project Abstract
 
-### Local Development
+This document proposes a novel application of a text message (SMS or Email) read-out and hands-free call interacted between an Android Smartphone and an infotainment platform (headunit) in a car environment. When a phone receives an SMS or Email, the text message is transferred from the phone to the headunit through a Bluetooth connection. On the headunit, user can control which and when the received SMS or E-mail to be read out through the in-vehicle audio system. The user may press one button on the headunit to activate the hands-free feature to call back the SMS sender.
 
-```
-$ yarn start
-```
+## High Level Requirement
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+Describe the requirements – i.e., what the product does and how it does it from a user point of view – at a high level.
 
-### Build
+## Conceptual Design
 
-```
-$ yarn build
-```
+Describe the initial design concept: Hardware/software architecture, programming language, operating system, etc.
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Background
 
-### Deployment
+The background will contain a more detailed description of the product and a comparison to existing similar projects/products. A literature search should be conducted and the results listed. Proper citation of sources is required. If there are similar open-source products, you should state whether existing source will be used and to what extent. If there are similar closed-source/proprietary products, you should state how the proposed product will be similar and different.
 
-Using SSH:
+## Required Resources
 
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Discuss what you need to develop this project. This includes background information you will need to acquire, hardware resources, and software resources. If these are not part of the standard Computer Science Department lab resources, these must be identified early and discussed with the instructor.
