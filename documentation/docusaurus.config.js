@@ -4,6 +4,12 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+/**
+ * The URL or reference to your projects logo!
+ * @type {string}
+ */
+const logo = 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   /*TODO: Change to your project's title and tagline*/
@@ -102,7 +108,7 @@ const config = {
         title: 'My Site',
         logo: {
           alt: 'My Site Logo',
-          src: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg',
+          src: logo,
         },
         items: [
           {
@@ -124,7 +130,10 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        logo: {
+          alt: 'My Site Logo',
+          src: logo,
+        },
         links: [
           {
             title: 'Docs',
