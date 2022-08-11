@@ -49,6 +49,8 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
+          remarkPlugins: [require('mdx-mermaid')],
+
         },
         // tutorials: {
         //   sidebarPath: require.resolve('./tutorialSidebars.js'),
