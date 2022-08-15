@@ -30,7 +30,7 @@ Discuss what you need to develop this project. This includes background informat
 
 ## Contributors
 
-[//]: # (<!-- readme: contributors -start -->)
+[//]: # (<!-- readme: contributors -start -->
 <table>
 <tr>
     <td align="center">
@@ -41,6 +41,5 @@ Discuss what you need to develop this project. This includes background informat
         </a>
     </td></tr>
 </table>
-
-[//]: # (<!-- readme: contributors -end -->)
+<!-- readme: contributors -end -->)
 
