@@ -37,3 +37,7 @@
 .medium-zoom-image--opened{
   z-index: 1000;
 }
+
+#atlwdg-trigger.atlwdg-trigger.atlwdg-RIGHT{
+  background-color: #9d2235;
+}
