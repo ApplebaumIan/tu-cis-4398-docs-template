@@ -29,8 +29,8 @@ The background will contain a more detailed description of the product and a com
 Discuss what you need to develop this project. This includes background information you will need to acquire, hardware resources, and software resources. If these are not part of the standard Computer Science Department lab resources, these must be identified early and discussed with the instructor.
 
 ## Contributors
----
-<!-- readme: contributors -start -->
+
+[//]: # (<!-- readme: contributors -start -->)
 <table>
 <tr>
     <td align="center">
@@ -41,5 +41,6 @@ Discuss what you need to develop this project. This includes background informat
         </a>
     </td></tr>
 </table>
-<!-- readme: contributors -end -->
----
+
+[//]: # (<!-- readme: contributors -end -->)
+
