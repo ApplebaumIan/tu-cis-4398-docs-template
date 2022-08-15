@@ -8,12 +8,12 @@ discordapp
 docusaurus
 dracula
 ecc
-embeded
 facebook
 favicon
 fbbebe
 fehguy
 ffff
+gantt
 headunit
 Homepage
 ifm
@@ -22,7 +22,6 @@ instructure
 jamstack
 keytar
 mdxjs
-mvc
 navbar
 nodejs
 nonintegers
