@@ -16,3 +16,4 @@ ignore$
 \.wav$
 ^\.github/
 (?:^|/)mvc-calc/
+(?:^|/)docusaurus.config.js$
