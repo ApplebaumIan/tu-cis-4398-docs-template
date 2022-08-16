@@ -39,3 +39,9 @@ tagline
 templeu
 websites
 wikimedia
+Applebaum
+atlassian
+atlwdg
+githubusercontent
+jira
+readme
