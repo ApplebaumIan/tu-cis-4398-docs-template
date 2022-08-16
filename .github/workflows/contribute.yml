@@ -10,6 +10,7 @@ jobs:
         steps:
             - name: Contribute List
               uses: applebaumian/contributors-readme-action@jsx-compatible
+              with:
+                comment_style: "link"
               env:
                   GITHUB_TOKEN: ${{ secrets.TOKEN }}
-                  comment_style: "link"
