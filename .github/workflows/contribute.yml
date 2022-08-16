@@ -9,6 +9,6 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: applebaumian/contributors-readme-action@master
+              uses: applebaumian/contributors-readme-action@jsx-compatible
               env:
                   GITHUB_TOKEN: ${{ secrets.TOKEN }}
