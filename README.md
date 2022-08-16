@@ -33,5 +33,5 @@ Discuss what you need to develop this project. This includes background informat
 
 ## Contributors
 
-[//]: # ( readme: collaborators -start )
-[//]: # ( readme: collaborators -end )
+[//]: # ( readme: collaborators,contributors -start )
+[//]: # ( readme: collaborators,contributors -end )
