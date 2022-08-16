@@ -12,3 +12,4 @@ jobs:
               uses: applebaumian/contributors-readme-action@jsx-compatible
               env:
                   GITHUB_TOKEN: ${{ secrets.TOKEN }}
+                  comment_style: "link"
