@@ -1,11 +1,10 @@
-<center>
+<div align="center">
 
 # Project Name
-[![Report Issue on Jira](https://img.shields.io/badge/Report%20Issues-Jira-red?style=flat&logo=jira-software)](https://temple-cis-projects-in-cs.atlassian.net/jira/software/c/projects/DT/issues)
+[![Report Issue on Jira](https://img.shields.io/badge/Report%20Issues-Jira-0052CC?style=flat&logo=jira-software)](https://temple-cis-projects-in-cs.atlassian.net/jira/software/c/projects/DT/issues)
 [![Deploy Docs](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/deploy.yml/badge.svg)](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/deploy.yml)
-[![Spell checking](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/spelling.yml/badge.svg?branch=main)](https://github.com/ApplebaumIan/tu-cis-4398-docs-template/actions/workflows/spelling.yml)
 
-</center>
+</div>
 
 
 ## Keywords
