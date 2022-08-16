@@ -1,4 +1,7 @@
 apiteam
+Applebaum
+atlassian
+atlwdg
 autocompletion
 baseurl
 clsx
@@ -14,12 +17,14 @@ fbbebe
 fehguy
 ffff
 gantt
+githubusercontent
 headunit
 Homepage
 ifm
 infotainment
 instructure
 jamstack
+jira
 keytar
 mdxjs
 navbar
@@ -29,6 +34,7 @@ openapi
 petstore
 Reademe
 Readme
+readme
 redoc
 redocusaurus
 seperate
@@ -39,9 +45,3 @@ tagline
 templeu
 websites
 wikimedia
-Applebaum
-atlassian
-atlwdg
-githubusercontent
-jira
-readme
