@@ -33,7 +33,7 @@ Discuss what you need to develop this project. This includes background informat
 
 ## Contributors
 
-[//]: # ( readme: contributors -start )
+[//]: # ( readme: collaborators -start )
 <table>
 <tr>
     <td align="center">
@@ -41,8 +41,8 @@ Discuss what you need to develop this project. This includes background informat
             <img src="https://avatars.githubusercontent.com/u/9451941?v=4" width="100;" alt="ApplebaumIan"/>
             <br />
             <sub><b>Ian Tyler Applebaum</b></sub>
-        </a>
+        </a>collaborators
     </td></tr>
 </table>
 
-[//]: # ( readme: contributors -end )
+[//]: # ( readme: collaborators -end )
