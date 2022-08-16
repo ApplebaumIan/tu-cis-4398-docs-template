@@ -1,9 +1,12 @@
+# spelling.yml is disabled per https://github.com/check-spelling/check-spelling/security/advisories/GHSA-g86g-chm8-7r2p
 name: Spell checking
 on:
-  pull_request_target:
   push:
-  issue_comment:
-    types: [created]
+    branches: ''
+#   pull_request_target:
+#   push:
+#   issue_comment:
+#     types: [created]
 
 jobs:
   spelling:
@@ -21,7 +24,7 @@ jobs:
           contains(github.event.comment.body, '@check-spelling-bot apply')
         ) }}
       uses: actions/checkout@v2
-    - uses: check-spelling/check-spelling@main
+    - uses: check-spelling/check-spelling@v0.0.20
       id: spelling
       if: ${{ github.event_name != 'issue_comment' ||
         (
