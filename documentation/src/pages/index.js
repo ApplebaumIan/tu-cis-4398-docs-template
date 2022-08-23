@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import ProjectReadme from "../components/ReademeMD";
 import styles from './index.module.css';
+import ForReview from "../components/ForReview";
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -34,6 +35,7 @@ export default function Home() {
     <Layout
         title={`Hello from ${siteConfig.title}`}
         description="Description will go into a meta tag in <head />">
+        <div style={{marginRight:"10%",marginLeft:"10%"}}><ForReview/></div>
         <HomepageHeader/>
         <main>
             <HomepageFeatures/>
