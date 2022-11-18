@@ -44,7 +44,10 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  themes: ['@docusaurus/theme-live-codeblock'],
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-live-codeblock','@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
@@ -58,7 +61,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
-          remarkPlugins: [require('mdx-mermaid')],
+          // remarkPlugins: [require('mdx-mermaid')],
 
         },
         // tutorials: {
