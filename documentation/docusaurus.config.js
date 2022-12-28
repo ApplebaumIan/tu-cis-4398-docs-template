@@ -19,10 +19,15 @@ const main_template_jira_scripts = () => {
   }
 }
 
+// You can change the title here. The default is the name of the repository.
+const title = ''+process.env.PROJECT_NAME.replaceAll('-',' ').split(' ').map((word) => {
+  return word[0].toUpperCase() + word.substring(1);
+}).join(' ');
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   /*TODO: Change to your project's title and tagline*/
-  title: 'CIS 4398 Documentation Template',
+  title: title,
   tagline: 'Owls are cool',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
   url: 'https://'+process.env.ORG_NAME+'.github.io/',
@@ -101,7 +106,7 @@ const config = {
     ({
       navbar: {
         /*TODO: Change to your project's title*/
-        title: 'My Site',
+        title: title,
         logo: {
           alt: 'My Site Logo',
           src: logo,
@@ -167,7 +172,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} ${title}, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
