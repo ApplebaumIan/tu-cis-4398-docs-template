@@ -201,7 +201,7 @@ const config = {
       },
     ],
     [
-      "docusaurus2-dotenv",
+      "docusaurus2-dotenv-2",
       {
         systemvars: true,
       },
