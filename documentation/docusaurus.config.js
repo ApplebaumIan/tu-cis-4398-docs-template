@@ -59,6 +59,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          showLastUpdateAuthor: true,
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: 'docs',
           path: 'docs',
