@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import ProjectReadme from "../components/ReademeMD";
 import styles from './index.module.css';
+import MDXContent from '@theme/MDXContent';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -35,7 +36,9 @@ export default function Home() {
         description="Description will go into a meta tag in <head />">
         <HomepageHeader/>
         <main>
-            <ProjectReadme/>
+            <MDXContent>
+                <ProjectReadme/>
+            </MDXContent>
         </main>
     </Layout>
   );
