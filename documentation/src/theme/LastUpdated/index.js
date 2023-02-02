@@ -5,7 +5,7 @@ import RevisionHistory from "../../components/RevisionHistory";
 export default function LastUpdatedWrapper(props) {
   return (
     <>
-        <RevisionHistory/>
+        {process.env.NODE_ENV === 'production' ?  <RevisionHistory/> :  <></>}
       <LastUpdated {...props} />
     </>
   );
