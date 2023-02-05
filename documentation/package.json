@@ -1,7 +1,7 @@
 {
-  "name": "tu-cis-4398-docs-template",
-  "version": "0.0.0",
-  "private": true,
+  "name": "create-project-docs",
+  "description": "Create a project with a Docusaurus documentation website template designed for Temple University CIS Projects in Computer Science courses.",
+  "version": "1.1.0",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --host 0.0.0.0 ",
@@ -13,6 +13,7 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids"
   },
+  "bin": "./.bin/bin.js",
   "dependencies": {
     "@docusaurus/core": "^2.2.0",
     "@docusaurus/preset-classic": "^2.2.0",
