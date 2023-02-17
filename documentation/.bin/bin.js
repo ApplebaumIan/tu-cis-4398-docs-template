@@ -11,8 +11,8 @@ const runCommand = command => {
     }
 
     const repoName = process.argv [2];
-    const gitCheckoutCommand = `git clone --depth 1 https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git ${repoName}`;
-        const installDepsCommand = `cd ${repoName}/documentation && yarn`;
+    const gitCheckoutCommand = `git clone --depth 1 https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git ${repoName} && cd ${repoName} && rm -rf .git && git init && cd ..`;
+    const installDepsCommand = `cd ${repoName}/documentation && yarn`;
     console.log( `Cloning the repository with name ${repoName}`);
     const checkedOut = runCommand (gitCheckoutCommand);
     if(!checkedOut) process.exit (  -1);
