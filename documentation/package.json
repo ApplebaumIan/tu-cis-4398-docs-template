@@ -1,7 +1,7 @@
 {
   "name": "create-project-docs",
   "description": "Create a project with a Docusaurus documentation website template designed for Temple University CIS Projects in Computer Science courses.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --host 0.0.0.0 ",
@@ -15,8 +15,8 @@
   },
   "bin": "./.bin/bin.js",
   "dependencies": {
-    "@docusaurus/core": "3.1.1",
-    "@docusaurus/preset-classic": "3.1.1",
+    "@docusaurus/core": "^3.1.1",
+    "@docusaurus/preset-classic": "^3.1.1",
     "@docusaurus/theme-live-codeblock": "^3.1.1",
     "@docusaurus/theme-mermaid": "^3.1.1",
     "@mdx-js/react": "^3.0.0",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.1.1",
-    "@docusaurus/types": "3.1.1"
+    "@docusaurus/types": "^3.1.1"
   },
   "browserslist": {
     "production": [
