@@ -9,10 +9,7 @@ import React from 'react';
 export default function Figure(props) {
     function id() {
         if (!props.id) {
-            id = props.caption
-            id = id.replaceAll('.', ' ')
-            id = id.replaceAll(' ', '-')
-            id = id.toLowerCase()
+            id = props.caption.replaceAll('.', '-').toLowerCase()
         } else {
             id = props.id
         }
