@@ -3,8 +3,7 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
-        "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/documentation",
-        "postCreateCommand": "yarn install"
+        "postCreateCommand": "cd documentation && yarn"
     }
   }
 }
