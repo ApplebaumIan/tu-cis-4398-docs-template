@@ -28,8 +28,8 @@ const title = rawProjectName
   .split(' ')
   .map(word => {
     // Make sure the word has at least one character
-    return word.length > 0 
-      ? word[0].toUpperCase() + word.substring(1) 
+    return word.length > 0
+      ? word[0].toUpperCase() + word.substring(1)
       : '';
   })
   .join(' ');
@@ -116,6 +116,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      ...(process.env.NODE_ENV === 'development' ? {announcementBar : {
+        id: 'dev_mode',
+        content:
+            'You are currently working on a local development version of your docs. This is <b>NOT</b> the live site.',
+        backgroundColor: '#ffca00',
+        textColor: '#091E42',
+        isCloseable: false,
+      }} : {}),
       navbar: {
         /*TODO: Change to your project's title*/
         title: title,
