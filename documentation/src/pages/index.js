@@ -28,6 +28,15 @@ function HomepageHeader() {
 }
 
 
+function Contributors() {
+    return <div className={styles.contributors}>
+        <a href={`https://github.com/${process.env.ORG_NAME}/${process.env.PROJECT_NAME}/graphs/contributors`}>
+            <img src={`https://contrib.rocks/image?repo=${process.env.ORG_NAME}/${process.env.PROJECT_NAME}`}/></a>
+            <p>Made with<a href={"https://contrib.rocks"}> contrib.rocks</a>.
+        </p>
+    </div>;
+}
+
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
@@ -38,6 +47,7 @@ export default function Home() {
         <main>
             <MDXContent>
                 <ProjectReadme/>
+                <Contributors/>
             </MDXContent>
         </main>
     </Layout>
