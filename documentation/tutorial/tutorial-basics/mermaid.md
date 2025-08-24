@@ -180,16 +180,7 @@ stateDiagram
 ```
 
 ### Use Case Diagrams
-There is currently no official support for Use Case diagrams in Mermaid. You can use the `graph` syntax to create simple use case diagrams. Using the font awesome `fa-regular fa-user` Here's an example:
-
-```mermaid
-flowchart TD
-    B["fa:fa-twitter for peace"]
-    B-->C[fa:fa-ban forbidden]
-    B-->D(fa:fa-spinner)
-    B-->E(A fa:fa-camera-retro perhaps?)
-
-```
+There is currently no official support for Use Case diagrams in Mermaid... maybe some day... until then you may have to resort to images from draw.io or similar tools. 
 
 
 
