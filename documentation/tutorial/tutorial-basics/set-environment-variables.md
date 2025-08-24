@@ -23,12 +23,19 @@ Open your terminal and run:
 
 ```bash
 export ORG_NAME="your-github-username"
+```
+
+```bash
 export PROJECT_NAME="your-repository-name"
 ```
 
 For example:
+
 ```bash
 export ORG_NAME="facebook"
+```
+
+```bash
 export PROJECT_NAME="docusaurus"
 ```
 
@@ -37,16 +44,30 @@ export PROJECT_NAME="docusaurus"
 Add the exports to your shell profile file:
 
 **For Bash (~/.bashrc or ~/.bash_profile):**
+
 ```bash
 echo 'export ORG_NAME="your-github-username"' >> ~/.bashrc
+```
+
+```bash
 echo 'export PROJECT_NAME="your-repository-name"' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
 ```
 
 **For Zsh (~/.zshrc):**
+
 ```bash
 echo 'export ORG_NAME="your-github-username"' >> ~/.zshrc
+```
+
+```bash
 echo 'export PROJECT_NAME="your-repository-name"' >> ~/.zshrc
+```
+
+```bash
 source ~/.zshrc
 ```
 
@@ -56,6 +77,9 @@ source ~/.zshrc
 
 ```cmd
 set ORG_NAME=your-github-username
+```
+
+```cmd
 set PROJECT_NAME=your-repository-name
 ```
 
@@ -63,6 +87,9 @@ set PROJECT_NAME=your-repository-name
 
 ```cmd
 setx ORG_NAME "your-github-username"
+```
+
+```cmd
 setx PROJECT_NAME "your-repository-name"
 ```
 
@@ -70,6 +97,9 @@ setx PROJECT_NAME "your-repository-name"
 
 ```powershell
 $env:ORG_NAME="your-github-username"
+```
+
+```powershell
 $env:PROJECT_NAME="your-repository-name"
 ```
 
@@ -77,6 +107,9 @@ $env:PROJECT_NAME="your-repository-name"
 
 ```powershell
 [Environment]::SetEnvironmentVariable("ORG_NAME", "your-github-username", "User")
+```
+
+```powershell
 [Environment]::SetEnvironmentVariable("PROJECT_NAME", "your-repository-name", "User")
 ```
 
@@ -95,20 +128,32 @@ $env:PROJECT_NAME="your-repository-name"
 After setting the variables, verify they're correctly set:
 
 ### macOS/Linux/GitHub Codespaces:
+
 ```bash
 echo $ORG_NAME
+```
+
+```bash
 echo $PROJECT_NAME
 ```
 
 ### Windows Command Prompt:
+
 ```cmd
 echo %ORG_NAME%
+```
+
+```cmd
 echo %PROJECT_NAME%
 ```
 
 ### Windows PowerShell:
+
 ```powershell
 echo $env:ORG_NAME
+```
+
+```powershell
 echo $env:PROJECT_NAME
 ```
 
@@ -117,10 +162,18 @@ echo $env:PROJECT_NAME
 ### For Local Development
 
 The environment variables you set locally will be used when running:
+
 ```bash
 cd documentation
+```
+
+```bash
 npm start
-# or
+```
+
+or
+
+```bash
 yarn start
 ```
 
@@ -157,4 +210,7 @@ For the repository `https://github.com/facebook/docusaurus`:
 - `PROJECT_NAME` should be `docusaurus`
 
 The contributors component will then display avatars from:
-`https://contrib.rocks/image?repo=facebook/docusaurus`
+
+```
+https://contrib.rocks/image?repo=facebook/docusaurus
+```
