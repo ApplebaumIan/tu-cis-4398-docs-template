@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 export default function RevisionHistory(props) {
     const [history, setHistory] = useState(null)
+    const [error, setError] = useState(null)
 
     useEffect(()=>{
         console.log(props);
@@ -20,9 +21,22 @@ export default function RevisionHistory(props) {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    setHistory(result)
+                    // Check if result is an array (successful API response) or an error object (rate limit/other error)
+                    if (Array.isArray(result)) {
+                        setHistory(result)
+                        setError(null)
+                    } else {
+                        // Handle API errors (including rate limiting)
+                        console.warn('GitHub API error:', result)
+                        setHistory([]) // Set empty array to prevent map error
+                        setError(result.message || 'Unable to load revision history')
+                    }
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    console.log('error', error)
+                    setHistory([]) // Set empty array to prevent map error
+                    setError('Unable to load revision history due to network error')
+                });
         }
     },[history]);
     // const {siteConfig} = useDocusaurusContext();
@@ -46,7 +60,13 @@ export default function RevisionHistory(props) {
             </tr>
             </thead>
             <tbody>
-            {history != null ? history.map((hist)=>{
+            {error ? (
+                <tr>
+                    <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
+                        {error}
+                    </td>
+                </tr>
+            ) : history != null && history.length > 0 ? history.map((hist)=>{
                 return <>
                 <tr>
                     <th scope="row">
@@ -63,7 +83,13 @@ export default function RevisionHistory(props) {
                     </td>
                 </tr>
                 </>
-            }) : <>nothing</>
+            }) : (
+                <tr>
+                    <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
+                        {history === null ? 'Loading...' : 'No revision history available'}
+                    </td>
+                </tr>
+            )
             }
         </tbody>
         </table>
