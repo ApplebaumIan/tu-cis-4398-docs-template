@@ -34,6 +34,7 @@ const title = rawProjectName
   })
   .join(' ');
 
+const baseUrl = process.env.PROJECT_NAME || "docs-dev-mode";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -41,8 +42,8 @@ const config = {
   title: title,
   tagline: 'Owls are cool',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
-  url: 'https://'+process.env.ORG_NAME+'.github.io/',
-  baseUrl: '/'+process.env.PROJECT_NAME+'/',
+  url: 'https://'+baseUrl+'.github.io/',
+  baseUrl: '/'+baseUrl+'/',
   trailingSlash: false,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
