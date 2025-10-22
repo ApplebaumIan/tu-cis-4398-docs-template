@@ -10,7 +10,7 @@ import InlineDocs from "@site/src/components/InlineDocs";
 
 The `InlineDocs` component lets you embed generated HTML documentation directly inside your Docusaurus site. It looks for folder your provide as a parameter in the /documentation/static folder. That folder needs to have an index.html file in it but most documentation generators do this for you.
 
-You can commit the docs you generate whenever they are changed or create a Github Actions workflow to automatically move it for you. 
+You can commit the docs you generate whenever they are changed or create a Github Actions workflow to automatically move it for you.
 <a href="https://github.com/ApplebaumIan/tu-cis-4398-docs-template/blob/main/.github/workflows/deployWithDocs.yml.disabled">
   Example
 </a>
@@ -29,12 +29,9 @@ You can commit the docs you generate whenever they are changed or create a Githu
 
 ## Example Usage
 
-```jsx title="Example"
+```jsx live title="Example"
 <InlineDocs docFolder="sampleDocs" width="100%" height="600px" />
 ```
 
 This looks for an index.html file in /documentation/static/sampleDocs then create a view with a width of 100% of its container and a height of 600 pixels.
 
-### Here is what it looks like:
-
-<InlineDocs docFolder="sampleDocs" width="100%" height="600px" />
