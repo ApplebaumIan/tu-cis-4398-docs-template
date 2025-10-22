@@ -42,7 +42,7 @@ const config = {
   title: title,
   tagline: 'Owls are cool',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
-  url: 'https://'+baseUrl+'.github.io/',
+  url: 'https://'+process.env.ORG_NAME+'.github.io/',
   baseUrl: '/'+baseUrl+'/',
   trailingSlash: false,
   onBrokenLinks: 'warn',
