@@ -19,4 +19,4 @@ jobs:
 
       - name: Unlighthouse assertions and client
         run: |
-          unlighthouse-ci --site capstone.ianapplebaum.com --budget 75 --build-static
+          unlighthouse-ci --site https://applebaumian.github.io/tu-cis-4398-docs-template/ --budget 75 --build-static
