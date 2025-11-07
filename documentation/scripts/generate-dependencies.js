@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 async function fetchPackageInfo(packageName) {
   // Handle scoped packages
@@ -45,7 +46,30 @@ async function generateDependenciesPage() {
   markdownContent += `3. Submit a pull request\n\n`;
   markdownContent += `All contributors will be recognized here.\n\n`;
 
-  markdownContent += `## Core Dependencies\n\n`;
+  markdownContent += `\n## Component Authors\n\n`;
+  markdownContent += `The following components were created by Temple University students and alumni. Thank you for your contributions!\n\n`;
+  markdownContent += `| Component | Author(s) |\n`;
+  markdownContent += `|---|---|\n`;
+
+  const componentsDir = path.join(__dirname, '..', 'src', 'components');
+  const components = fs.readdirSync(componentsDir).filter(file => {
+      const filePath = path.join(componentsDir, file);
+      return fs.statSync(filePath).isDirectory();
+  });
+
+  for (const component of components) {
+      const componentPath = path.join(componentsDir, component);
+      try {
+          const authorsOutput = execSync(`git log --pretty=format:"%an" -- "${componentPath}"`).toString().trim();
+          const authors = [...new Set(authorsOutput.split('\n').filter(name => name))];
+          markdownContent += `| ${component} | ${authors.join(', ')} |\n`;
+      } catch (error) {
+          console.error(`Could not find author for component ${component}: ${error.message}`);
+          markdownContent += `| ${component} | Not available |\n`;
+      }
+  }
+
+  markdownContent += `\n## Core Dependencies\n\n`;
   markdownContent += `| Package | Description | Repository |\n`;
   markdownContent += `|---|---|---|\n`;
 
