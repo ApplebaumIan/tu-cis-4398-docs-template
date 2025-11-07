@@ -60,8 +60,24 @@ async function generateDependenciesPage() {
   for (const component of components) {
       const componentPath = path.join(componentsDir, component);
       try {
-          const authorsOutput = execSync(`git log --pretty=format:"%an" -- "${componentPath}"`).toString().trim();
-          const authors = [...new Set(authorsOutput.split('\n').filter(name => name))];
+          const authorsOutput = execSync(`git log --pretty=format:"%an|%ae" -- "${componentPath}"`).toString().trim();
+          const authorLines = [...new Set(authorsOutput.split('\n').filter(line => line))];
+
+          const authors = await Promise.all(authorLines.map(async (line) => {
+              const [name, email] = line.split('|');
+              try {
+                  const response = await fetch(`https://api.github.com/search/users?q=${email}+in:email`);
+                  const data = await response.json();
+                  if (data.items && data.items.length > 0) {
+                      const user = data.items[0];
+                      return `[${name}](${user.html_url})`;
+                  }
+              } catch (apiError) {
+                  console.error(`Failed to fetch GitHub profile for ${email}: ${apiError.message}`);
+              }
+              return name; // Fallback to just the name
+          }));
+
           markdownContent += `| ${component} | ${authors.join(', ')} |\n`;
       } catch (error) {
           console.error(`Could not find author for component ${component}: ${error.message}`);
