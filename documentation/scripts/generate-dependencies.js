@@ -36,7 +36,7 @@ async function generateDependenciesPage() {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
   let markdownContent = `import Contributors from '@site/src/components/Contributors';\n\n`;
-  markdownContent += `# Open Source Usage & Contributors\n\n`;
+  markdownContent += `# Contributors & Open Source Usage \n\n`;
   markdownContent += `This Docusaurus template was designed and Developed for the [Temple University CIS Capstone course](https://capstone.ianapplebaum.com). It is built on the shoulders of students, alumni, faculty, and amazing open source software. This page is automatically generated from the \`package.json\` file and provides a list of all the open source projects and plugins that make this template possible.\n\n`;
   // markdownContent += `\n## Template Contributors\n\n`;
   markdownContent += `<Contributors orgName="applebaumian" projectName="tu-cis-4398-docs-template"/>\n\n`;
