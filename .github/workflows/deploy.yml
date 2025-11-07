@@ -14,11 +14,31 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout full history for original author
+        if: github.repository_owner == 'applebaumian'
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Checkout shallow history for template users
+        if: github.repository_owner != 'applebaumian'
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install
         run: cd documentation && yarn install
+
+      - name: Generate Dependencies Page
+        if: github.repository_owner == 'applebaumian'
+        run: node documentation/scripts/generate-dependencies.js
+
+      - name: Fetch Dependencies Page for template users
+        if: github.repository_owner != 'applebaumian'
+        run: |
+          mkdir -p documentation/tutorial
+          curl -o documentation/tutorial/open-source-usage.mdx https://raw.githubusercontent.com/applebaumian/tu-cis-4398-docs-template/main/documentation/tutorial/open-source-usage.mdx
 
       - name: Deploy
         run: |
