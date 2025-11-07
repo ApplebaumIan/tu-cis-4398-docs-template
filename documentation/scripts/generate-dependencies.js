@@ -1,0 +1,83 @@
+const fs = require('fs');
+const path = require('path');
+
+async function fetchPackageInfo(packageName) {
+  // Handle scoped packages
+  const fetchName = packageName.replace('/', '%2f');
+  try {
+    const response = await fetch(`https://registry.npmjs.org/${fetchName}`);
+    if (!response.ok) {
+      console.error(`Failed to fetch package info for ${packageName}: ${response.statusText}`);
+      return { description: 'Could not fetch description.', repository: { url: '' } };
+    }
+    const data = await response.json();
+    return {
+      description: data.description || 'No description available.',
+      repository: data.repository,
+    };
+  } catch (error) {
+    console.error(`Error fetching package info for ${packageName}:`, error);
+    return { description: 'Could not fetch description.', repository: { url: '' } };
+  }
+}
+
+function getRepoUrl(repo) {
+  if (!repo || !repo.url) return 'N/A';
+  let url = repo.url.replace(/^git\+/, '').replace(/\.git$/, '');
+  if (url.startsWith('ssh://git@')) {
+    url = `https://${url.substring(10)}`;
+  }
+  return `[View](${url})`;
+}
+
+async function generateDependenciesPage() {
+  const packageJsonPath = path.join(__dirname, '..', 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+
+  let markdownContent = `import Contributors from '@site/src/components/Contributors';\n\n`;
+  markdownContent += `# Open Source Usage & Contributors\n\n`;
+  markdownContent += `This Docusaurus template was designed and Developed for the [Temple University CIS Capstone course](https://capstone.ianapplebaum.com). It is built on the shoulders of students, alumni, faculty, and amazing open source software. This page is automatically generated from the \`package.json\` file and provides a list of all the open source projects and plugins that make this template possible.\n\n`;
+  // markdownContent += `\n## Template Contributors\n\n`;
+  markdownContent += `<Contributors orgName="applebaumian" projectName="tu-cis-4398-docs-template"/>\n\n`;
+  markdownContent += `We welcome contributions from Temple University students, and alumni! If you'd like to contribute, please:\n\n`;
+  markdownContent += `1. Fork the [template repository](https://github.com/ApplebaumIan/tu-cis-4398-docs-template)\n`;
+  markdownContent += `2. Create a feature branch\n`;
+  markdownContent += `3. Submit a pull request\n\n`;
+  markdownContent += `All contributors will be recognized here.\n\n`;
+
+  markdownContent += `## Core Dependencies\n\n`;
+  markdownContent += `| Package | Description | Repository |\n`;
+  markdownContent += `|---|---|---|\n`;
+
+  for (const [name, version] of Object.entries(packageJson.dependencies)) {
+    if (name === 'plugin-image-zoom') { // Special handling for git dependency
+      markdownContent += `| \`${name}@${version}\` | Image zoom functionality | [View](https://github.com/flexanalytics/plugin-image-zoom) |\n`;
+      continue;
+    }
+    const { description, repository } = await fetchPackageInfo(name);
+    const repoUrl = getRepoUrl(repository);
+    markdownContent += `| \`${name}@${version}\` | ${description} | ${repoUrl} |\n`;
+  }
+
+  markdownContent += `\n## Development Dependencies\n\n`;
+  markdownContent += `| Package | Description | Repository |\n`;
+  markdownContent += `|---|---|---|\n`;
+
+  for (const [name, version] of Object.entries(packageJson.devDependencies)) {
+    const { description, repository } = await fetchPackageInfo(name);
+    const repoUrl = getRepoUrl(repository);
+    markdownContent += `| \`${name}@${version}\` | ${description} | ${repoUrl} |\n`;
+  }
+
+  markdownContent += `## License\n\n`;
+  markdownContent += `This template follows the licensing of its dependencies. Please refer to individual projects for their specific licenses.\n\n`;
+
+  const outputDir = path.join(__dirname, '..', 'tutorial');
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+  fs.writeFileSync(path.join(outputDir, 'open-source-usage.mdx'), markdownContent);
+  console.log('Successfully generated open-source-usage.mdx');
+}
+
+generateDependenciesPage();

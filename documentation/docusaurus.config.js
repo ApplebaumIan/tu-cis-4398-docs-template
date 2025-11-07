@@ -190,6 +190,10 @@ const config = {
                 label: 'GitHub',
                 href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
               },
+              {
+                label:"Template Contributors",
+                to:"/tutorial/open-source-usage"
+              }
             ],
           },
         ],
@@ -222,6 +226,7 @@ const config = {
         id: 'tutorial',
         path: 'tutorial',
         routeBasePath: 'tutorial',
+        showLastUpdateAuthor: true,
         sidebarPath: require.resolve('./sidebars.js'),
         // ... other options
       },
