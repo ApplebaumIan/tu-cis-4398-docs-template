@@ -36,7 +36,9 @@ jobs:
           else
             echo "gh-pages branch does not exist. Creating it now."
             git checkout --orphan gh-pages
-            git rm -rf .
+            if [ -n "$(git ls-files)" ]; then
+              git rm -rf .
+            fi
             git commit --allow-empty -m "Initial commit"
             git push origin gh-pages
             git checkout main
