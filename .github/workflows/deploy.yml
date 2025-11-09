@@ -14,20 +14,35 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - name: Checkout full history for original author
-        if: github.repository_owner == 'applebaumian'
+      - name: Checkout full history
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Checkout shallow history for template users
-        if: github.repository_owner != 'applebaumian'
-        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: documentation/yarn.lock
 
-      - name: Install
+      - name: Create or verify gh-pages branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --heads origin gh-pages | grep -q gh-pages; then
+            echo "gh-pages branch already exists."
+          else
+            echo "gh-pages branch does not exist. Creating it now."
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git commit --allow-empty -m "Initial commit"
+            git push origin gh-pages
+            git checkout main
+          fi
+
+      - name: Install Dependencies
         run: cd documentation && yarn install
 
       - name: Generate Dependencies Page
@@ -40,10 +55,8 @@ jobs:
           mkdir -p documentation/tutorial
           curl -o documentation/tutorial/open-source-usage.mdx https://raw.githubusercontent.com/applebaumian/tu-cis-4398-docs-template/main/documentation/tutorial/open-source-usage.mdx
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         run: |
           export ORG_NAME=$(echo ${GITHUB_REPOSITORY%/*})
           export PROJECT_NAME=$(echo ${GITHUB_REPOSITORY#*/})
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd documentation && NODE_ENV="production" GIT_USER="github-actions[bot]" GIT_PASS="${{ secrets.GITHUB_TOKEN }}" yarn deploy
