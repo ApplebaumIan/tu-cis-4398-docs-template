@@ -35,11 +35,13 @@ jobs:
             echo "gh-pages branch already exists."
           else
             echo "gh-pages branch does not exist. Creating it now."
+            # Create orphan branch and ensure clean state
             git checkout --orphan gh-pages
-            if [ -n "$(git ls-files)" ]; then
-              git rm -rf .
-            fi
-            git commit --allow-empty -m "Initial commit"
+            git reset --hard
+            # Add a placeholder so the branch has at least one tracked file
+            echo "Placeholder for gh-pages branch" > .gitkeep
+            git add .gitkeep
+            git commit -m "chore(gh-pages): initial gh-pages placeholder"
             git push origin gh-pages
             git checkout main
           fi
