@@ -63,7 +63,7 @@ async function generateDependenciesPage() {
           const authorsOutput = execSync(`git log --pretty=format:"%an|%ae" -- "${componentPath}"`).toString().trim();
           const authorLines = [...new Set(authorsOutput.split('\n').filter(line => line))];
 
-          const authors = await Promise.all(authorLines.map(async (line) => {
+          const authors = await Promise.all(authorLines.reverse().map(async (line) => {
               const [name, email] = line.split('|');
               try {
                   const response = await fetch(`https://api.github.com/search/users?q=${email}+in:email`);

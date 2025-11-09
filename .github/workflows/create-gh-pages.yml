@@ -1,0 +1,18 @@
+name: Create gh-pages branch
+on:
+  push:
+    branches:
+      - main
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Create gh-pages branch
+        run: |
+          git checkout --orphan gh-pages
+          git rm -rf .
+          git commit --allow-empty -m "Initial commit"
+          git push origin gh-pages
+
