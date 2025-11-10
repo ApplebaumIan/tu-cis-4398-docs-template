@@ -53,12 +53,6 @@ jobs:
         if: github.repository_owner == 'applebaumian'
         run: node documentation/scripts/generate-dependencies.js
 
-      - name: Fetch Dependencies Page for template users
-        if: github.repository_owner != 'applebaumian'
-        run: |
-          mkdir -p documentation/tutorial
-          curl -o documentation/tutorial/open-source-usage.mdx https://raw.githubusercontent.com/applebaumian/tu-cis-4398-docs-template/main/documentation/tutorial/open-source-usage.mdx
-
       - name: Deploy to GitHub Pages
         run: |
           export ORG_NAME=$(echo ${GITHUB_REPOSITORY%/*})

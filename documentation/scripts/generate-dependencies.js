@@ -113,11 +113,14 @@ async function generateDependenciesPage() {
   markdownContent += `This template follows the licensing of its dependencies. Please refer to individual projects for their specific licenses.\n\n`;
 
   const outputDir = path.join(__dirname, '..', 'tutorial');
+  const staticDir = path.join(__dirname, '..', 'static');
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
   fs.writeFileSync(path.join(outputDir, 'open-source-usage.mdx'), markdownContent);
-  console.log('Successfully generated open-source-usage.mdx');
+  fs.writeFileSync(path.join(staticDir, 'open-source-usage.mdx'), markdownContent);
+
+    console.log('Successfully generated open-source-usage.mdx');
 }
 
 generateDependenciesPage();
