@@ -245,20 +245,6 @@ const config = {
         sourceBaseUrl: 'https://applebaumian.github.io/tu-cis-4398-docs-template/',
         outDir: 'tutorial',
         documents: ['open-source-usage.mdx'],
-        modifyContent(filename, content) {
-          if (filename.includes('open-source-usage')) {
-            const newContent = content.substring(content.indexOf('---', content.indexOf('---') + 1) + 3);
-            return {
-              filename: 'open-source-usage.mdx',
-              content: `---
-id: open-source-usage
-title: Open Source Usage
----
-${newContent}`,
-            };
-          }
-          return undefined;
-        },
       },
     ]] : []),
   ],
