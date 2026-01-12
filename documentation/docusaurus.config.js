@@ -237,6 +237,24 @@ const config = {
         systemvars: true,
       },
     ],
+		[
+      '@commentasaurus/commentasaurus',
+      {
+        // The url for the API. Default is Localhost:8080
+        apiUrl: "https://api.commentasaurus.nickrucinski.com",
+        // Should the comment sidebar be shown by default
+        autoShowComments: false,
+        // Sets the permissions for who can comment
+        // [anon] - Anonymous users can comment
+        // [auth] - Only authenticated users can comment
+        // [team] - Only people with access to the org can comment
+        commentPermission: "",
+        repoName: "",
+        repoOwner: "",
+        repoID: "",
+        repoCategoryId: "",
+      },
+    ],
     'plugin-image-zoom',
     ...(process.env.ORG_NAME !== 'ApplebaumIan' ? [[
       'docusaurus-plugin-remote-content',
