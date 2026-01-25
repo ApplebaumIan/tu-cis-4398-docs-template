@@ -1,5 +1,5 @@
 {
   "name": "CIS4398 Docusaurus Dev Container",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
-  "onCreateCommand": "cd documentation && corepack enable && yarn install"
+  "postCreateCommand": "cd documentation && yarn install"
 }
