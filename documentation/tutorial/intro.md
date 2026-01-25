@@ -24,15 +24,22 @@ If you're working on a class assignment, use the GitHub Classroom link provided 
 4. Name your repository and make it public
 5. Click **"Create repository from template"**
 
-#### Option C: Quick Start with npx
-Create a new project quickly using npx:
+#### Option C: Create New Project with CLI
+
+Create a new project with documentation included:
 
 ```bash
-npx create-project-docs my-project
+npx create-project-docs new my-project
+cd my-project
 ```
 
+#### Option D: Add to Existing Project
+
+Add documentation to an existing project:
+
 ```bash
-cd my-project
+cd your-existing-project
+npx create-project-docs add
 ```
 
 ### Step 2: Enable GitHub Pages
