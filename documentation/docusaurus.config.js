@@ -8,31 +8,32 @@
  * The URL or reference to your projects logo!
  * @type {string}
  */
-const logo = 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg';
+const logo =
+  "https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg";
 
 const main_template_jira_scripts = () => {
-  if (process.env.ORG_NAME === 'ApplebaumIan'){
-    return [    'https://temple-cis-projects-in-cs.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/azc3hx/b/8/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=50af7ec2',
-      'https://temple-cis-projects-in-cs.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/azc3hx/b/8/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=160e88a6',]
+  if (process.env.ORG_NAME === "ApplebaumIan") {
+    return [
+      "https://temple-cis-projects-in-cs.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/azc3hx/b/8/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=50af7ec2",
+      "https://temple-cis-projects-in-cs.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/azc3hx/b/8/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=160e88a6",
+    ];
   } else {
-    return []
+    return [];
   }
-}
+};
 
 // Fallback value if PROJECT_NAME is not defined:
-const rawProjectName = process.env.PROJECT_NAME || 'docs-dev-mode';
+const rawProjectName = process.env.PROJECT_NAME || "docs-dev-mode";
 
 // Transform PROJECT_NAME (or fallback) to a title-like string:
 const title = rawProjectName
-  .replaceAll('-', ' ')
-  .split(' ')
-  .map(word => {
+  .replaceAll("-", " ")
+  .split(" ")
+  .map((word) => {
     // Make sure the word has at least one character
-    return word.length > 0
-      ? word[0].toUpperCase() + word.substring(1)
-      : '';
+    return word.length > 0 ? word[0].toUpperCase() + word.substring(1) : "";
   })
-  .join(' ');
+  .join(" ");
 
 const baseUrl = process.env.PROJECT_NAME || "docs-dev-mode";
 
@@ -40,14 +41,14 @@ const baseUrl = process.env.PROJECT_NAME || "docs-dev-mode";
 const config = {
   /*TODO: Change to your project's title and tagline*/
   title: title,
-  tagline: 'Owls are cool',
+  tagline: "Owls are cool",
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
-  url: 'https://'+process.env.ORG_NAME+'.github.io/',
-  baseUrl: '/'+baseUrl+'/',
+  url: "https://" + process.env.ORG_NAME + ".github.io/",
+  baseUrl: "/" + baseUrl + "/",
   trailingSlash: false,
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  onBrokenLinks: "warn",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/favicon.ico",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -58,29 +59,32 @@ const config = {
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-live-codeblock','@docusaurus/theme-mermaid'],
+  themes: ["@docusaurus/theme-live-codeblock", "@docusaurus/theme-mermaid"],
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
           showLastUpdateAuthor: true,
-          sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: 'docs',
-          path: 'docs',
+          sidebarPath: require.resolve("./sidebars.js"),
+          routeBasePath: "docs",
+          path: "docs",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
+            "https://github.com/" +
+            process.env.ORG_NAME +
+            "/" +
+            process.env.PROJECT_NAME +
+            "/edit/main/documentation/",
           // remarkPlugins: [require('mdx-mermaid')],
-
         },
         // tutorials: {
         //   sidebarPath: require.resolve('./tutorialSidebars.js'),
@@ -91,25 +95,25 @@ const config = {
         // },
 
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       }),
     ],
     [
-      'redocusaurus',
+      "redocusaurus",
       {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            id: 'using-single-yaml',
-            spec: 'static/openapi.yml.yaml',
-            route: '/api/',
+            id: "using-single-yaml",
+            spec: "static/openapi.yml.yaml",
+            route: "/api/",
           },
         ],
         // Theme Options for modifying how redoc renders them
         theme: {
           // Change with your site colors
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       },
     ],
@@ -117,52 +121,62 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      ...(process.env.NODE_ENV === 'development' ? {announcementBar : {
-        id: 'dev_mode',
-        content:
-            'You are currently working on a local development version of your docs. This is <b>NOT</b> the live site.',
-        backgroundColor: '#ffca00',
-        textColor: '#091E42',
-        isCloseable: false,
-      }} : {}),
+      ...(process.env.NODE_ENV === "development"
+        ? {
+            announcementBar: {
+              id: "dev_mode",
+              content:
+                "You are currently working on a local development version of your docs. This is <b>NOT</b> the live site.",
+              backgroundColor: "#ffca00",
+              textColor: "#091E42",
+              isCloseable: false,
+            },
+          }
+        : {}),
       navbar: {
         /*TODO: Change to your project's title*/
         title: title,
         logo: {
-          alt: 'My Site Logo',
+          alt: "My Site Logo",
           src: logo,
         },
         items: [
           {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Documentation',
-          },{
-            to: '/tutorial/Intro',
-            label: 'Docusaurus Tutorial',
-            position: 'left',
+            type: "doc",
+            docId: "intro",
+            position: "left",
+            label: "Documentation",
+          },
+          {
+            to: "/tutorial/Intro",
+            label: "Docusaurus Tutorial",
+            position: "left",
             activeBaseRegex: `/tutorial/`,
           },
           {
-            href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
-            label: 'GitHub',
-            position: 'right',
+            href:
+              "https://github.com/" +
+              process.env.ORG_NAME +
+              "/" +
+              process.env.PROJECT_NAME,
+            label: "GitHub",
+            position: "right",
           },
+          { type: "custom-authButton", position: "right" },
         ],
       },
       footer: {
         logo: {
-          alt: 'My Site Logo',
+          alt: "My Site Logo",
           src: logo,
         },
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Documentation',
-                to: '/docs/intro',
+                label: "Documentation",
+                to: "/docs/intro",
               },
             ],
           },
@@ -184,16 +198,20 @@ const config = {
           //   ],
           // },
           {
-            title: 'More',
+            title: "More",
             items: [
               {
-                label: 'GitHub',
-                href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
+                label: "GitHub",
+                href:
+                  "https://github.com/" +
+                  process.env.ORG_NAME +
+                  "/" +
+                  process.env.PROJECT_NAME,
               },
               {
-                label:"Template Contributors",
-                to:"/tutorial/open-source-usage"
-              }
+                label: "Template Contributors",
+                to: "/tutorial/open-source-usage",
+              },
             ],
           },
         ],
@@ -205,29 +223,28 @@ const config = {
       // },
       imageZoom: {
         // CSS selector to apply the plugin to, defaults to '.markdown img'
-        selector: '.markdown img',
+        selector: ".markdown img",
         // Optional medium-zoom options
         // see: https://www.npmjs.com/package/medium-zoom#options
         options: {
           margin: 24,
-          zIndex:100,
-          background: 'white',
+          zIndex: 100,
+          background: "white",
           // scrollOffset: 10,
           // container: '#zoom-container',
           // template: '#zoom-template',
         },
       },
-
     }),
   plugins: [
     [
-      '@docusaurus/plugin-content-docs',
+      "@docusaurus/plugin-content-docs",
       {
-        id: 'tutorial',
-        path: 'tutorial',
-        routeBasePath: 'tutorial',
+        id: "tutorial",
+        path: "tutorial",
+        routeBasePath: "tutorial",
         showLastUpdateAuthor: true,
-        sidebarPath: require.resolve('./sidebars.js'),
+        sidebarPath: require.resolve("./sidebars.js"),
         // ... other options
       },
     ],
@@ -237,20 +254,46 @@ const config = {
         systemvars: true,
       },
     ],
-    'plugin-image-zoom',
-    ...(process.env.ORG_NAME !== 'ApplebaumIan' ? [[
-      'docusaurus-plugin-remote-content',
+    [
+      "@commentasaurus/commentasaurus",
       {
-        name: 'open-source-usage',
-        sourceBaseUrl: 'https://applebaumian.github.io/tu-cis-4398-docs-template/',
-        outDir: 'tutorial',
-        documents: ['open-source-usage.mdx'],
+        // The url for the API. Default is Localhost:8080
+        apiUrl: "https://api.commentasaurus.nickrucinski.com",
+        // Should the comment sidebar be shown by default
+        autoShowComments: false,
+        // Sets the permissions for who can comment
+        // [anon] - Anonymous users can comment
+        // [auth] - Only authenticated users can comment
+        // [team] - Only people with access to the org can comment
+        commentPermission: "anon",
+        repoName: "",
+        repoOwner: "",
+        repoID: "",
+        repoCategoryId: "",
+        // Use https://api.commentasaurus.nickrucinski.com/{org}/{repo}/setup to get these values
+        // Example: https://api.commentasaurus.nickrucinski.com/ApplebaumIan/tu-cis-4398-docs-temple/setup
       },
-    ]] : []),
+    ],
+    "plugin-image-zoom",
+    ...(process.env.ORG_NAME !== "ApplebaumIan"
+      ? [
+          [
+            "docusaurus-plugin-remote-content",
+            {
+              name: "open-source-usage",
+              sourceBaseUrl:
+                "https://applebaumian.github.io/tu-cis-4398-docs-template/",
+              outDir: "tutorial",
+              documents: ["open-source-usage.mdx"],
+            },
+          ],
+        ]
+      : []),
   ],
-  scripts:['https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-      ...main_template_jira_scripts()
+  scripts: [
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+    ...main_template_jira_scripts(),
   ],
 };
-console.log(config.scripts)
+console.log(config.scripts);
 module.exports = config;
