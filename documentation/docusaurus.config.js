@@ -223,6 +223,7 @@ const config = {
     [
       require.resolve('./plugins/docusaurus-plugin-revision-history'),
       {
+        cacheFile: '.cache/revision-history.json',
         pageSize: 5,
       },
     ],

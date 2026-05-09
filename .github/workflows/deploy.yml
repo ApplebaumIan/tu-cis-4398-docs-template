@@ -27,6 +27,21 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: documentation/yarn.lock
 
+      - name: Restore revision history cache
+        uses: actions/cache@v4
+        with:
+          path: documentation/.cache/revision-history.json
+          key: revision-history-${{ runner.os }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            revision-history-${{ runner.os }}-${{ github.ref_name }}-
+            revision-history-${{ runner.os }}-
+
+      - name: Restore Docusaurus cache
+        uses: actions/cache@v4
+        with:
+          path: documentation/.docusaurus
+          key: docusaurus-${{ runner.os }}-${{ hashFiles('documentation/yarn.lock', 'documentation/docusaurus.config.js', 'documentation/sidebars.js', 'documentation/src/**/*', 'documentation/plugins/**/*', 'documentation/docs/**/*', 'documentation/tutorial/**/*') }}
+
       - name: Create or verify gh-pages branch
         run: |
           git config --global user.name "github-actions[bot]"
@@ -54,6 +69,8 @@ jobs:
         run: node documentation/scripts/generate-dependencies.js
 
       - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export ORG_NAME=$(echo ${GITHUB_REPOSITORY%/*})
           export PROJECT_NAME=$(echo ${GITHUB_REPOSITORY#*/})

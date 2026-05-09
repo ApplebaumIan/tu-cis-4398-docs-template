@@ -1,7 +1,12 @@
 const fs = require('fs/promises');
 const path = require('path');
+const {execFile} = require('child_process');
+const {promisify} = require('util');
 
 const DEFAULT_PAGE_SIZE = 5;
+const DEFAULT_CACHE_FILE = path.join('.cache', 'revision-history.json');
+const CACHE_VERSION = 1;
+const execFileAsync = promisify(execFile);
 
 function toPosixPath(value) {
   return value.split(path.sep).join('/');
@@ -158,6 +163,46 @@ async function fetchCommitHistory({orgName, projectName, repoFilePath, token}) {
   return commits;
 }
 
+async function readCache(cacheFilePath) {
+  try {
+    const raw = await fs.readFile(cacheFilePath, 'utf8');
+    const parsed = JSON.parse(raw);
+
+    if (parsed?.version !== CACHE_VERSION || typeof parsed?.entries !== 'object') {
+      return {version: CACHE_VERSION, entries: {}};
+    }
+
+    return parsed;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return {version: CACHE_VERSION, entries: {}};
+    }
+
+    console.warn(`[revision-history] Failed to read cache file ${cacheFilePath}: ${error.message}`);
+    return {version: CACHE_VERSION, entries: {}};
+  }
+}
+
+async function writeCache(cacheFilePath, cache) {
+  await fs.mkdir(path.dirname(cacheFilePath), {recursive: true});
+  await fs.writeFile(cacheFilePath, JSON.stringify(cache, null, 2));
+}
+
+async function getLatestLocalCommitSha(repoRoot, repoFilePath) {
+  try {
+    const {stdout} = await execFileAsync(
+      'git',
+      ['log', '-n', '1', '--format=%H', '--', repoFilePath],
+      {cwd: repoRoot},
+    );
+
+    const sha = stdout.trim();
+    return sha || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 module.exports = function revisionHistoryPlugin(context, options) {
   const siteDir = context.siteDir;
   const repoRoot = path.resolve(siteDir, '..');
@@ -166,6 +211,7 @@ module.exports = function revisionHistoryPlugin(context, options) {
   const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || process.env.GITHUB_PAT;
   const baseUrl = context.siteConfig.baseUrl;
   const pageSize = Number(options.pageSize) > 0 ? Number(options.pageSize) : DEFAULT_PAGE_SIZE;
+  const cacheFilePath = path.resolve(siteDir, options.cacheFile ?? DEFAULT_CACHE_FILE);
   const contentSources = options.contentSources ?? [
     {routeBasePath: 'docs', path: 'docs'},
     {routeBasePath: 'tutorial', path: 'tutorial'},
@@ -185,6 +231,7 @@ module.exports = function revisionHistoryPlugin(context, options) {
       }
 
       const histories = {};
+      const cache = await readCache(cacheFilePath);
 
       for (const source of contentSources) {
         const sourceRoot = path.join(siteDir, source.path);
@@ -193,6 +240,24 @@ module.exports = function revisionHistoryPlugin(context, options) {
         for (const fullPath of files) {
           const repoFilePath = toPosixPath(path.relative(repoRoot, fullPath));
           const slug = await readFrontMatterField(fullPath, 'slug');
+          const lookupKeys = toLookupKeys(source.routeBasePath, sourceRoot, fullPath, repoRoot, baseUrl, slug);
+          const cachedEntry = cache.entries[repoFilePath];
+          const latestLocalCommitSha = await getLatestLocalCommitSha(repoRoot, repoFilePath);
+
+          if (
+            cachedEntry &&
+            Array.isArray(cachedEntry.history) &&
+            latestLocalCommitSha &&
+            cachedEntry.latestCommitSha === latestLocalCommitSha
+          ) {
+            for (const key of lookupKeys) {
+              histories[key] = {
+                history: cachedEntry.history,
+                error: null,
+              };
+            }
+            continue;
+          }
 
           try {
             const history = await fetchCommitHistory({
@@ -202,7 +267,13 @@ module.exports = function revisionHistoryPlugin(context, options) {
               token,
             });
 
-            for (const key of toLookupKeys(source.routeBasePath, sourceRoot, fullPath, repoRoot, baseUrl, slug)) {
+            cache.entries[repoFilePath] = {
+              history,
+              latestCommitSha: history[0]?.sha ?? latestLocalCommitSha ?? null,
+              updatedAt: new Date().toISOString(),
+            };
+
+            for (const key of lookupKeys) {
               histories[key] = {
                 history,
                 error: null,
@@ -211,7 +282,17 @@ module.exports = function revisionHistoryPlugin(context, options) {
           } catch (error) {
             console.warn(`[revision-history] Failed to load history for ${repoFilePath}: ${error.message}`);
 
-            for (const key of toLookupKeys(source.routeBasePath, sourceRoot, fullPath, repoRoot, baseUrl, slug)) {
+            if (cachedEntry && Array.isArray(cachedEntry.history)) {
+              for (const key of lookupKeys) {
+                histories[key] = {
+                  history: cachedEntry.history,
+                  error: null,
+                };
+              }
+              continue;
+            }
+
+            for (const key of lookupKeys) {
               histories[key] = {
                 history: [],
                 error: error.message,
@@ -220,6 +301,8 @@ module.exports = function revisionHistoryPlugin(context, options) {
           }
         }
       }
+
+      await writeCache(cacheFilePath, cache);
 
       return {histories, pageSize};
     },
