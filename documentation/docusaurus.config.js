@@ -221,6 +221,13 @@ const config = {
     }),
   plugins: [
     [
+      require.resolve('./plugins/docusaurus-plugin-revision-history'),
+      {
+        cacheFile: '.cache/revision-history.json',
+        pageSize: 5,
+      },
+    ],
+    [
       '@docusaurus/plugin-content-docs',
       {
         id: 'tutorial',

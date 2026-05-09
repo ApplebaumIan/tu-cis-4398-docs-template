@@ -1,98 +1,140 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import {usePluginData} from '@docusaurus/useGlobalData';
+import {useLocation} from '@docusaurus/router';
+import {useDoc} from '@docusaurus/plugin-content-docs/client';
 
-export default function RevisionHistory(props) {
-    const [history, setHistory] = useState(null)
-    const [error, setError] = useState(null)
+function normalizePath(value) {
+  if (!value) {
+    return null;
+  }
 
-    useEffect(()=>{
-        console.log(props);
-        if (history == null){
-            var myHeaders = new Headers();
-            myHeaders.append("Accept", "application/json");
-            // myHeaders.append("Authorization", `Bearer ${api_key}`);
+  return value.replace(/\\/g, '/').replace(/\/+$/, '') || '/';
+}
 
-            var requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow',
-            };
+function formatCommitDate(value) {
+  if (!value) {
+    return 'Unknown date';
+  }
 
-            fetch(`https://api.github.com/repos/${process.env.ORG_NAME}/${process.env.PROJECT_NAME}/commits?path=documentation/`+location.pathname.substring(location.pathname.lastIndexOf('docs/'))+".md", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    console.log(result)
-                    // Check if result is an array (successful API response) or an error object (rate limit/other error)
-                    if (Array.isArray(result)) {
-                        setHistory(result)
-                        setError(null)
-                    } else {
-                        // Handle API errors (including rate limiting)
-                        console.warn('GitHub API error:', result)
-                        setHistory([]) // Set empty array to prevent map error
-                        setError(result.message || 'Unable to load revision history')
-                    }
-                })
-                .catch(error => {
-                    console.log('error', error)
-                    setHistory([]) // Set empty array to prevent map error
-                    setError('Unable to load revision history due to network error')
-                });
-        }
-    },[history]);
-    // const {siteConfig} = useDocusaurusContext();
-    return <>
-        <details>
-            <summary>
-                Revision History
-            </summary>
+  return new Date(value).toLocaleString();
+}
+
+export default function RevisionHistory() {
+  const location = useLocation();
+  const {metadata} = useDoc();
+  const pluginData = usePluginData('docusaurus-plugin-revision-history');
+  const histories = pluginData?.histories ?? {};
+  const pageSize = pluginData?.pageSize ?? 5;
+
+  const historyEntry = useMemo(() => {
+    const candidates = [
+      location.pathname,
+      metadata?.permalink,
+      metadata?.source,
+      metadata?.source?.replace(/^\.\//, ''),
+    ]
+      .map(normalizePath)
+      .filter(Boolean);
+
+    return candidates
+      .map((candidate) => histories[candidate])
+      .find(Boolean);
+  }, [histories, location.pathname, metadata?.permalink, metadata?.source]);
+
+  const history = historyEntry?.history ?? [];
+  const error = historyEntry?.error ?? null;
+  const totalPages = Math.max(1, Math.ceil(history.length / pageSize));
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setPage(1);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
+  const visibleHistory = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return history.slice(start, start + pageSize);
+  }, [history, page, pageSize]);
+
+  return (
+    <>
+      <details>
+        <summary>
+          Revision History
+        </summary>
         <table>
-            <thead>
+          <thead>
             <tr>
-            <th scope="row">
+              <th scope="row">
                 Author
-            </th>
-            <th scope="row">
+              </th>
+              <th scope="row">
                 Revision
-            </th>
-                <th scope="row">
+              </th>
+              <th scope="row">
                 Date
-            </th>
+              </th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             {error ? (
-                <tr>
-                    <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
-                        {error}
-                    </td>
-                </tr>
-            ) : history != null && history.length > 0 ? history.map((hist)=>{
-                return <>
-                <tr>
-                    <th scope="row">
+              <tr>
+                <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
+                  {error}
+                </td>
+              </tr>
+            ) : visibleHistory.length > 0 ? (
+              visibleHistory.map((hist) => (
+                <tr key={hist.sha}>
+                  <th scope="row">
                     {hist.commit.author.name}
-                    </th>
-                    <td>
-                        <a href={`https://github.com/${process.env.ORG_NAME}/${process.env.PROJECT_NAME}/commit/${hist.sha}`}>
-
-                        {hist.commit.message}
-                        </a>
-                    </td>
-                    <td>
-                        {`${new Date(hist.commit.author.date).toLocaleString()}`}
-                    </td>
+                  </th>
+                  <td>
+                    <a href={`https://github.com/${process.env.ORG_NAME}/${process.env.PROJECT_NAME}/commit/${hist.sha}`}>
+                      {hist.commit.message}
+                    </a>
+                  </td>
+                  <td>
+                    {formatCommitDate(hist.commit.author.date)}
+                  </td>
                 </tr>
-                </>
-            }) : (
-                <tr>
-                    <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
-                        {history === null ? 'Loading...' : 'No revision history available'}
-                    </td>
-                </tr>
-            )
-            }
-        </tbody>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" style={{textAlign: 'center', fontStyle: 'italic', color: '#666'}}>
+                  No revision history available
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
-        </details>
+        {history.length > pageSize ? (
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem'}}>
+            <button
+              type="button"
+              onClick={() => setPage((currentPage) => Math.max(1, currentPage - 1))}
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+            <span>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage((currentPage) => Math.min(totalPages, currentPage + 1))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
+      </details>
     </>
+  );
 }
