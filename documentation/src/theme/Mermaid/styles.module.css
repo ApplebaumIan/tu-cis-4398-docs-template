@@ -1,0 +1,161 @@
+.mermaidZoomTarget {
+  position: relative;
+  border-radius: 6px;
+  outline: none;
+}
+
+.mermaidZoomTargetPending {
+  cursor: default;
+}
+
+.mermaidZoomTargetReady {
+  cursor: zoom-in;
+}
+
+.mermaidZoomTarget:focus-visible {
+  box-shadow: 0 0 0 3px var(--ifm-color-primary-lightest);
+}
+
+.mermaidZoomTargetReady:hover .openBadge,
+.mermaidZoomTargetReady:focus-visible .openBadge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.openBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  padding: 0.45rem 0.6rem;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  isolation: isolate;
+  background: #111827;
+}
+
+.toolbar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+  box-shadow: var(--ifm-global-shadow-md);
+  padding: 0.4rem;
+}
+
+.controlButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+}
+
+.controlButton:hover,
+.controlButton:focus-visible {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  outline: none;
+}
+
+.zoomLevel {
+  min-width: 3.5rem;
+  color: var(--ifm-font-color-base);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: center;
+}
+
+.transformWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+
+.transformWrapper:active {
+  cursor: grabbing;
+}
+
+.transformContent {
+  align-items: center;
+  justify-content: center;
+}
+
+.diagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: min(92vw, 1200px);
+  max-height: 82vh;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color, #fff);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  padding: 1rem;
+}
+
+.diagram svg {
+  display: block;
+  width: auto;
+  max-width: calc(min(92vw, 1200px) - 2rem);
+  max-height: calc(82vh - 2rem);
+  height: auto;
+}
+
+@media (max-width: 700px) {
+  .toolbar {
+    top: auto;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    justify-content: center;
+  }
+
+  .openBadge {
+    opacity: 1;
+    transform: none;
+  }
+
+  .diagram,
+  .diagram svg {
+    max-width: 94vw;
+    max-height: 76vh;
+  }
+}
