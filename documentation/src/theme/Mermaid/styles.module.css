@@ -16,29 +16,27 @@
   box-shadow: 0 0 0 3px var(--ifm-color-primary-lightest);
 }
 
-.mermaidZoomTargetReady:hover .openBadge,
-.mermaidZoomTargetReady:focus-visible .openBadge {
+.mermaidZoomTargetReady:hover .inlineActions,
+.mermaidZoomTargetReady:focus-within .inlineActions {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
-.openBadge {
+.inlineActions {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
   z-index: 1;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  background: var(--ifm-background-surface-color);
-  color: var(--ifm-font-color-base);
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   opacity: 0;
-  padding: 0.45rem 0.6rem;
   pointer-events: none;
   transform: translateY(-0.25rem);
   transition: opacity 150ms ease, transform 150ms ease;
+  --prism-background-color: var(--ifm-background-surface-color);
+  --prism-color: var(--ifm-font-color-base);
 }
 
 .overlay {
@@ -69,17 +67,28 @@
   --prism-color: var(--ifm-font-color-base);
 }
 
-.topActions .codeBlockButtons {
+.topActions .codeBlockButtons,
+.inlineActions .codeBlockButtons {
   position: static;
 }
 
-.topActions .codeBlockButtons button {
+.topActions .codeBlockButtons button,
+.inlineActions .codeBlockButtons button,
+.inlineFullscreenButton {
+  display: inline-flex;
+  align-items: center;
   width: 2.5rem;
   height: 2.5rem;
   justify-content: center;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
   background: var(--ifm-background-surface-color);
   color: var(--ifm-font-color-base);
-  opacity: 1;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  opacity: 1 !important;
+  padding: 0;
   box-shadow: var(--ifm-global-shadow-lw);
   transition:
     background-color 150ms ease,
@@ -89,14 +98,20 @@
 }
 
 .topActions .codeBlockButtons button:hover,
-.topActions .codeBlockButtons button:focus-visible {
+.topActions .codeBlockButtons button:focus-visible,
+.inlineActions .codeBlockButtons button:hover,
+.inlineActions .codeBlockButtons button:focus-visible,
+.inlineFullscreenButton:hover,
+.inlineFullscreenButton:focus-visible {
   background: var(--ifm-background-surface-color);
   border-color: var(--mermaid-viewer-control-hover-border-color);
   color: var(--mermaid-viewer-control-hover-color);
   outline: none;
 }
 
-.topActions .codeBlockButtons button:active {
+.topActions .codeBlockButtons button:active,
+.inlineActions .codeBlockButtons button:active,
+.inlineFullscreenButton:active {
   transform: translateY(1px);
 }
 
@@ -277,9 +292,10 @@
     bottom: 0.75rem;
   }
 
-  .openBadge {
+  .inlineActions {
     opacity: 1;
     transform: none;
+    pointer-events: auto;
   }
 
   .diagram,

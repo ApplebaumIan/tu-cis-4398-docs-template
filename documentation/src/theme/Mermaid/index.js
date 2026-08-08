@@ -62,6 +62,16 @@ function ArrowDownIcon() {
   );
 }
 
+function FullscreenIcon() {
+  return (
+    <Icon>
+      <path d="M7 8 3 12l4 4" />
+      <path d="M17 8l4 4-4 4" />
+      <path d="M3 12h18" />
+    </Icon>
+  );
+}
+
 function RotateIcon() {
   return (
     <Icon>
@@ -143,8 +153,13 @@ function getSvgRenderedSize(svg) {
   return null;
 }
 
+function getDiagramSvg(container) {
+  const svgs = Array.from(container?.querySelectorAll('svg') ?? []);
+  return svgs.find((svg) => !svg.closest('[data-mermaid-actions]')) ?? null;
+}
+
 function copyDiagramForViewer(container) {
-  const svg = container?.querySelector('svg');
+  const svg = getDiagramSvg(container);
 
   if (!svg) {
     return null;
@@ -204,7 +219,7 @@ function getMermaidSource(props) {
   return '';
 }
 
-function MermaidViewerActions({diagramMarkdown}) {
+function MermaidCopyButton({diagramMarkdown, className}) {
   const metadata = useMemo(() => createCodeBlockMetadata({
     code: diagramMarkdown,
     className: 'language-md',
@@ -224,10 +239,47 @@ function MermaidViewerActions({diagramMarkdown}) {
   }), []);
 
   return (
+    <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
+      <CodeBlockButtons className={className} />
+    </CodeBlockContextProvider>
+  );
+}
+
+function MermaidViewerActions({diagramMarkdown}) {
+  return (
     <div className={`${styles.topActions} theme-code-block`} aria-label="Diagram actions">
-      <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
-        <CodeBlockButtons className={styles.codeBlockButtons} />
-      </CodeBlockContextProvider>
+      <MermaidCopyButton
+        diagramMarkdown={diagramMarkdown}
+        className={styles.codeBlockButtons}
+      />
+    </div>
+  );
+}
+
+function MermaidInlineActions({isReady, diagramMarkdown, onOpen}) {
+  if (!isReady) {
+    return null;
+  }
+
+  return (
+    <div
+      className={`${styles.inlineActions} theme-code-block`}
+      data-mermaid-actions
+      aria-label="Diagram actions"
+    >
+      <button
+        type="button"
+        className={styles.inlineFullscreenButton}
+        onClick={onOpen}
+        aria-label="Open Mermaid diagram fullscreen"
+        title="Open diagram fullscreen"
+      >
+        <FullscreenIcon />
+      </button>
+      <MermaidCopyButton
+        diagramMarkdown={diagramMarkdown}
+        className={styles.codeBlockButtons}
+      />
     </div>
   );
 }
@@ -392,7 +444,7 @@ function useRenderedMermaidSvg(diagramRef) {
     }
 
     const updateRenderedState = () => {
-      setHasRenderedDiagram(Boolean(container.querySelector('svg')));
+      setHasRenderedDiagram(Boolean(getDiagramSvg(container)));
     };
 
     updateRenderedState();
@@ -404,18 +456,6 @@ function useRenderedMermaidSvg(diagramRef) {
   }, [diagramRef]);
 
   return hasRenderedDiagram;
-}
-
-function MermaidOpenBadge({isReady}) {
-  if (!isReady) {
-    return null;
-  }
-
-  return (
-    <span className={styles.openBadge} aria-hidden="true">
-      Fullscreen
-    </span>
-  );
 }
 
 function getZoomTargetClassName(isReady) {
@@ -446,19 +486,13 @@ export default function MermaidWrapper(props) {
       return;
     }
 
-    if (event.target instanceof Element && event.target.closest('a, button')) {
+    if (
+      event.target instanceof Element
+      && event.target.closest('a, button, [data-mermaid-actions]')
+    ) {
       return;
     }
 
-    openFullscreen();
-  }, [hasRenderedDiagram, openFullscreen]);
-
-  const handleKeyDown = useCallback((event) => {
-    if (!hasRenderedDiagram || (event.key !== 'Enter' && event.key !== ' ')) {
-      return;
-    }
-
-    event.preventDefault();
     openFullscreen();
   }, [hasRenderedDiagram, openFullscreen]);
 
@@ -467,16 +501,16 @@ export default function MermaidWrapper(props) {
       <div
         className={getZoomTargetClassName(hasRenderedDiagram)}
         ref={diagramRef}
-        role="button"
-        tabIndex={hasRenderedDiagram ? 0 : -1}
         onClick={handleClick}
-        onKeyDown={handleKeyDown}
         aria-disabled={!hasRenderedDiagram}
-        aria-label="Open Mermaid diagram fullscreen"
         title={hasRenderedDiagram ? 'Open diagram fullscreen' : 'Diagram is still rendering'}
       >
         <OriginalMermaid {...props} />
-        <MermaidOpenBadge isReady={hasRenderedDiagram} />
+        <MermaidInlineActions
+          isReady={hasRenderedDiagram}
+          diagramMarkdown={mermaidMarkdown}
+          onOpen={openFullscreen}
+        />
       </div>
       {fullscreenDiagram && (
         <MermaidFullscreenViewer
