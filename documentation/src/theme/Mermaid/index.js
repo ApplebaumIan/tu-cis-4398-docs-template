@@ -10,6 +10,102 @@ import styles from './styles.module.css';
 
 const MIN_SCALE = 0.2;
 const MAX_SCALE = 8;
+const PAN_STEP = 120;
+
+function Icon({children}) {
+  return (
+    <svg
+      className={styles.icon}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {children}
+    </svg>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <Icon>
+      <path d="M15 6 9 12l6 6" />
+    </Icon>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <Icon>
+      <path d="m9 6 6 6-6 6" />
+    </Icon>
+  );
+}
+
+function ArrowUpIcon() {
+  return (
+    <Icon>
+      <path d="m6 15 6-6 6 6" />
+    </Icon>
+  );
+}
+
+function ArrowDownIcon() {
+  return (
+    <Icon>
+      <path d="m6 9 6 6 6-6" />
+    </Icon>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <Icon>
+      <rect x="9" y="9" width="10" height="10" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
+    </Icon>
+  );
+}
+
+function RotateIcon() {
+  return (
+    <Icon>
+      <path d="M3 12a9 9 0 0 1 15.1-6.6" />
+      <path d="M18 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-15.1 6.6" />
+      <path d="M6 21v-5h5" />
+    </Icon>
+  );
+}
+
+function XIcon() {
+  return (
+    <Icon>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </Icon>
+  );
+}
+
+function ZoomInIcon() {
+  return (
+    <Icon>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21 16.65 16.65" />
+      <path d="M11 8v6" />
+      <path d="M8 11h6" />
+    </Icon>
+  );
+}
+
+function ZoomOutIcon() {
+  return (
+    <Icon>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21 16.65 16.65" />
+      <path d="M8 11h6" />
+    </Icon>
+  );
+}
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -90,37 +186,181 @@ function copyDiagramForViewer(container) {
   return clone.outerHTML;
 }
 
-function MermaidViewerToolbar({onClose, closeButtonRef}) {
-  const {zoomIn, zoomOut, centerView} = useControls();
-  const scale = useTransformComponent(({state}) => state.scale);
+function formatMermaidMarkdown(value) {
+  const source = typeof value === 'string' ? value.trim() : '';
+
+  if (!source) {
+    return '';
+  }
+
+  return `\`\`\`mermaid\n${source}\n\`\`\``;
+}
+
+function getMermaidSource(props) {
+  if (typeof props.value === 'string') {
+    return props.value;
+  }
+
+  if (typeof props.children === 'string') {
+    return props.children;
+  }
+
+  return '';
+}
+
+async function copyTextToClipboard(text) {
+  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.top = '-1000px';
+  document.body.append(textarea);
+  textarea.select();
+
+  try {
+    const copied = document.execCommand('copy');
+
+    if (!copied) {
+      throw new Error('Unable to copy Mermaid markdown.');
+    }
+  } finally {
+    textarea.remove();
+  }
+}
+
+function MermaidViewerActions({diagramMarkdown}) {
+  const [copyStatus, setCopyStatus] = useState('idle');
+
+  useEffect(() => {
+    if (copyStatus === 'idle') {
+      return undefined;
+    }
+
+    const timeout = window.setTimeout(() => setCopyStatus('idle'), 1800);
+    return () => window.clearTimeout(timeout);
+  }, [copyStatus]);
+
+  const handleCopy = useCallback(async () => {
+    if (!diagramMarkdown) {
+      return;
+    }
+
+    try {
+      await copyTextToClipboard(diagramMarkdown);
+      setCopyStatus('copied');
+    } catch {
+      setCopyStatus('failed');
+    }
+  }, [diagramMarkdown]);
 
   return (
-    <div className={styles.toolbar}>
-      <button type="button" className={styles.controlButton} onClick={() => zoomOut()} aria-label="Zoom out" title="Zoom out">
-        -
-      </button>
-      <span className={styles.zoomLevel}>{Math.round(scale * 100)}%</span>
-      <button type="button" className={styles.controlButton} onClick={() => zoomIn()} aria-label="Zoom in" title="Zoom in">
-        +
-      </button>
-      <button type="button" className={styles.controlButton} onClick={() => centerView(1)} aria-label="Reset zoom" title="Reset zoom">
-        1:1
-      </button>
+    <div className={styles.topActions} aria-label="Diagram actions">
       <button
         type="button"
-        className={styles.controlButton}
-        ref={closeButtonRef}
-        onClick={onClose}
-        aria-label="Close fullscreen diagram"
-        title="Close"
+        className={`${styles.viewerButton} ${copyStatus === 'copied' ? styles.viewerButtonSuccess : ''}`}
+        onClick={handleCopy}
+        disabled={!diagramMarkdown}
+        aria-label={copyStatus === 'copied' ? 'Copied Mermaid markdown' : 'Copy Mermaid markdown'}
+        title={copyStatus === 'copied' ? 'Copied Mermaid markdown' : 'Copy Mermaid markdown'}
       >
-        x
+        <CopyIcon />
       </button>
+      <span className={styles.srOnly} aria-live="polite">
+        {copyStatus === 'copied' ? 'Mermaid markdown copied.' : ''}
+        {copyStatus === 'failed' ? 'Unable to copy Mermaid markdown.' : ''}
+      </span>
     </div>
   );
 }
 
-function MermaidFullscreenViewer({diagramMarkup, onClose}) {
+function MermaidPanZoomControls() {
+  const {zoomIn, zoomOut, setTransform, centerView} = useControls();
+  const scale = useTransformComponent(({state}) => state.scale);
+  const positionX = useTransformComponent(({state}) => state.positionX);
+  const positionY = useTransformComponent(({state}) => state.positionY);
+
+  const panBy = useCallback((deltaX, deltaY) => {
+    setTransform(positionX + deltaX, positionY + deltaY, scale, 150);
+  }, [positionX, positionY, scale, setTransform]);
+
+  return (
+    <div className={styles.panZoomControls} aria-label="Pan and zoom controls">
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.panUp}`}
+        onClick={() => panBy(0, PAN_STEP)}
+        aria-label="Pan up"
+        title="Pan up"
+      >
+        <ArrowUpIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.panLeft}`}
+        onClick={() => panBy(PAN_STEP, 0)}
+        aria-label="Pan left"
+        title="Pan left"
+      >
+        <ArrowLeftIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.panReset}`}
+        onClick={() => centerView(1)}
+        aria-label="Reset view"
+        title="Reset view"
+      >
+        <RotateIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.panRight}`}
+        onClick={() => panBy(-PAN_STEP, 0)}
+        aria-label="Pan right"
+        title="Pan right"
+      >
+        <ArrowRightIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.panDown}`}
+        onClick={() => panBy(0, -PAN_STEP)}
+        aria-label="Pan down"
+        title="Pan down"
+      >
+        <ArrowDownIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.zoomIn}`}
+        onClick={() => zoomIn()}
+        aria-label="Zoom in"
+        title="Zoom in"
+      >
+        <ZoomInIcon />
+      </button>
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.zoomOut}`}
+        onClick={() => zoomOut()}
+        aria-label="Zoom out"
+        title="Zoom out"
+      >
+        <ZoomOutIcon />
+      </button>
+      <div className={styles.zoomLevel} aria-label={`Zoom level ${Math.round(scale * 100)}%`}>
+        {Math.round(scale * 100)}%
+      </div>
+    </div>
+  );
+}
+
+function MermaidFullscreenViewer({diagramMarkup, diagramMarkdown, onClose}) {
   const closeButtonRef = useRef(null);
   const previousFocusRef = useRef(null);
 
@@ -148,6 +388,17 @@ function MermaidFullscreenViewer({diagramMarkup, onClose}) {
 
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Fullscreen Mermaid diagram">
+      <MermaidViewerActions diagramMarkdown={diagramMarkdown} />
+      <button
+        type="button"
+        className={`${styles.viewerButton} ${styles.closeButton}`}
+        ref={closeButtonRef}
+        onClick={onClose}
+        aria-label="Close fullscreen diagram"
+        title="Close"
+      >
+        <XIcon />
+      </button>
       <TransformWrapper
         initialScale={1}
         minScale={MIN_SCALE}
@@ -160,7 +411,7 @@ function MermaidFullscreenViewer({diagramMarkup, onClose}) {
         panning={{velocityDisabled: true}}
         pinch={{step: 8}}
       >
-        <MermaidViewerToolbar onClose={onClose} closeButtonRef={closeButtonRef} />
+        <MermaidPanZoomControls />
         <TransformComponent
           wrapperClass={styles.transformWrapper}
           contentClass={styles.transformContent}
@@ -226,14 +477,15 @@ export default function MermaidWrapper(props) {
   const diagramRef = useRef(null);
   const [fullscreenDiagram, setFullscreenDiagram] = useState(null);
   const hasRenderedDiagram = useRenderedMermaidSvg(diagramRef);
+  const mermaidMarkdown = formatMermaidMarkdown(getMermaidSource(props));
 
   const openFullscreen = useCallback(() => {
     const diagramMarkup = copyDiagramForViewer(diagramRef.current);
 
     if (diagramMarkup) {
-      setFullscreenDiagram(diagramMarkup);
+      setFullscreenDiagram({markup: diagramMarkup, markdown: mermaidMarkdown});
     }
-  }, []);
+  }, [mermaidMarkdown]);
 
   const handleClick = useCallback((event) => {
     if (!hasRenderedDiagram) {
@@ -274,7 +526,8 @@ export default function MermaidWrapper(props) {
       </div>
       {fullscreenDiagram && (
         <MermaidFullscreenViewer
-          diagramMarkup={fullscreenDiagram}
+          diagramMarkup={fullscreenDiagram.markup}
+          diagramMarkdown={fullscreenDiagram.markdown}
           onClose={() => setFullscreenDiagram(null)}
         />
       )}
