@@ -7274,11 +7274,6 @@ media-typer@0.3.0:
   resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-medium-zoom@^1.0.8:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/medium-zoom/-/medium-zoom-1.1.0.tgz"
-  integrity sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==
-
 memfs@^4.43.1:
   version "4.56.10"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-4.56.10.tgz#eaf2f6556db10f91f1e9ad9f1274fd988c646202"
@@ -8485,13 +8480,6 @@ pkijs@^3.3.3:
     pvtsutils "^1.3.6"
     pvutils "^1.1.3"
     tslib "^2.8.1"
-
-plugin-image-zoom@flexanalytics/plugin-image-zoom:
-  version "1.1.0"
-  resolved "https://codeload.github.com/flexanalytics/plugin-image-zoom/tar.gz/8e1b866c79ed6d42cefc4c52f851f1dfd1d0c7de"
-  integrity sha512-y/KQYx2qGrnMwB0zPxxN3g2teitLlHjGFJDoepfjJg2cC1AB5qCC9Bzp5YsNGQb2+Vw0Nd4O32b8FQGTgFSrVw==
-  dependencies:
-    medium-zoom "^1.0.8"
 
 pluralize@^8.0.0:
   version "8.0.0"

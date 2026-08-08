@@ -29,15 +29,6 @@
   --ifm-footer-background-color: black;
 }
 
-.medium-zoom-overlay{
-  /*background-color: #00a400 !important;*/
-  z-index: 999;
-}
-
-.medium-zoom-image--opened{
-  z-index: 1000;
-}
-
 #atlwdg-trigger.atlwdg-trigger.atlwdg-RIGHT{
   background-color: #9d2235;
 }
