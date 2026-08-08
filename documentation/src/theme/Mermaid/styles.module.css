@@ -46,10 +46,15 @@
   inset: 0;
   z-index: 2147483647;
   isolation: isolate;
-  background: var(--ifm-color-gray-900, #111827);
-  color: var(--ifm-color-gray-100, #f5f6f7);
+  background: var(--ifm-color-emphasis-100, #f5f6f7);
+  color: var(--ifm-font-color-base);
   --mermaid-viewer-control-hover-border-color: var(--ifm-color-emphasis-400);
   --mermaid-viewer-control-hover-color: var(--ifm-font-color-base);
+}
+
+:global([data-theme='dark']) .overlay {
+  background: var(--ifm-color-gray-900, #111827);
+  color: var(--ifm-color-gray-100, #f5f6f7);
 }
 
 .topActions {
