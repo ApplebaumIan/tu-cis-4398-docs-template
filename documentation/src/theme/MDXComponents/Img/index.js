@@ -285,12 +285,19 @@ export default function MDXImgWrapper(props) {
       return;
     }
 
-    if (event.target instanceof Element && event.target.closest('button')) {
+    event.preventDefault();
+    openFullscreen();
+  }, [canOpen, openFullscreen]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (!canOpen || event.target !== event.currentTarget) {
       return;
     }
 
-    event.preventDefault();
-    openFullscreen();
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openFullscreen();
+    }
   }, [canOpen, openFullscreen]);
 
   return (
@@ -301,11 +308,19 @@ export default function MDXImgWrapper(props) {
           canOpen ? styles.imageZoomTargetReady : styles.imageZoomTargetPending,
         ].join(' ')}
         ref={wrapperRef}
-        onClick={handleClick}
-        aria-disabled={!canOpen}
-        title={canOpen ? 'Open image fullscreen' : undefined}
       >
-        <OriginalMDXImg {...props} />
+        <span
+          className={styles.imageInteractiveTarget}
+          role={canOpen ? 'button' : undefined}
+          tabIndex={canOpen ? 0 : undefined}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          aria-disabled={canOpen ? undefined : true}
+          aria-label={canOpen ? 'Open image fullscreen' : undefined}
+          title={canOpen ? 'Open image fullscreen' : undefined}
+        >
+          <OriginalMDXImg {...props} />
+        </span>
         {canOpen && (
           <span className={styles.inlineActions} data-image-actions aria-label="Image actions">
             <button

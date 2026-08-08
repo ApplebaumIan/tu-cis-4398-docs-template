@@ -486,14 +486,22 @@ export default function MermaidWrapper(props) {
       return;
     }
 
-    if (
-      event.target instanceof Element
-      && event.target.closest('a, button, [data-mermaid-actions]')
-    ) {
+    if (event.target instanceof Element && event.target.closest('a')) {
       return;
     }
 
     openFullscreen();
+  }, [hasRenderedDiagram, openFullscreen]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (!hasRenderedDiagram || event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openFullscreen();
+    }
   }, [hasRenderedDiagram, openFullscreen]);
 
   return (
@@ -501,11 +509,19 @@ export default function MermaidWrapper(props) {
       <div
         className={getZoomTargetClassName(hasRenderedDiagram)}
         ref={diagramRef}
-        onClick={handleClick}
-        aria-disabled={!hasRenderedDiagram}
-        title={hasRenderedDiagram ? 'Open diagram fullscreen' : 'Diagram is still rendering'}
       >
-        <OriginalMermaid {...props} />
+        <div
+          className={styles.mermaidInteractiveTarget}
+          role="button"
+          tabIndex={hasRenderedDiagram ? 0 : -1}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          aria-disabled={hasRenderedDiagram ? undefined : true}
+          aria-label="Open Mermaid diagram fullscreen"
+          title={hasRenderedDiagram ? 'Open diagram fullscreen' : 'Diagram is still rendering'}
+        >
+          <OriginalMermaid {...props} />
+        </div>
         <MermaidInlineActions
           isReady={hasRenderedDiagram}
           diagramMarkdown={mermaidMarkdown}

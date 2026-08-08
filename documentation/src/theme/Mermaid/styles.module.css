@@ -1,6 +1,10 @@
 .mermaidZoomTarget {
   position: relative;
   border-radius: 6px;
+}
+
+.mermaidInteractiveTarget {
+  border-radius: inherit;
   outline: none;
 }
 
@@ -12,7 +16,8 @@
   cursor: zoom-in;
 }
 
-.mermaidZoomTarget:focus-visible {
+.mermaidZoomTarget:focus-visible,
+.mermaidInteractiveTarget:focus-visible {
   box-shadow: 0 0 0 3px var(--ifm-color-primary-lightest);
 }
 
