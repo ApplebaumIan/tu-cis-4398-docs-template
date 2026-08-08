@@ -48,6 +48,8 @@
   isolation: isolate;
   background: var(--ifm-color-gray-900, #111827);
   color: var(--ifm-color-gray-100, #f5f6f7);
+  --mermaid-viewer-control-hover-border-color: var(--ifm-color-emphasis-400);
+  --mermaid-viewer-control-hover-color: var(--ifm-font-color-base);
 }
 
 .topActions {
@@ -83,9 +85,9 @@
 
 .topActions .codeBlockButtons button:hover,
 .topActions .codeBlockButtons button:focus-visible {
-  background: var(--ifm-hover-overlay);
-  border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  background: var(--ifm-background-surface-color);
+  border-color: var(--mermaid-viewer-control-hover-border-color);
+  color: var(--mermaid-viewer-control-hover-color);
   outline: none;
 }
 
@@ -124,9 +126,9 @@
 
 .viewerButton:hover,
 .viewerButton:focus-visible {
-  background: var(--ifm-hover-overlay);
-  border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  background: var(--ifm-background-surface-color);
+  border-color: var(--mermaid-viewer-control-hover-border-color);
+  color: var(--mermaid-viewer-control-hover-color);
   outline: none;
 }
 
