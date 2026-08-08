@@ -1,5 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import OriginalMermaid from '@theme-original/Mermaid';
+import {
+  CodeBlockContextProvider,
+  createCodeBlockMetadata,
+} from '@docusaurus/theme-common/internal';
+import CodeBlockButtons from '@theme/CodeBlock/Buttons';
 import {
   TransformComponent,
   TransformWrapper,
@@ -53,15 +58,6 @@ function ArrowDownIcon() {
   return (
     <Icon>
       <path d="m6 9 6 6 6-6" />
-    </Icon>
-  );
-}
-
-function CopyIcon() {
-  return (
-    <Icon>
-      <rect x="9" y="9" width="10" height="10" rx="2" />
-      <path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
     </Icon>
   );
 }
@@ -208,72 +204,30 @@ function getMermaidSource(props) {
   return '';
 }
 
-async function copyTextToClipboard(text) {
-  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'fixed';
-  textarea.style.top = '-1000px';
-  document.body.append(textarea);
-  textarea.select();
-
-  try {
-    const copied = document.execCommand('copy');
-
-    if (!copied) {
-      throw new Error('Unable to copy Mermaid markdown.');
-    }
-  } finally {
-    textarea.remove();
-  }
-}
-
 function MermaidViewerActions({diagramMarkdown}) {
-  const [copyStatus, setCopyStatus] = useState('idle');
+  const metadata = useMemo(() => createCodeBlockMetadata({
+    code: diagramMarkdown,
+    className: 'language-md',
+    language: 'md',
+    defaultLanguage: undefined,
+    metastring: undefined,
+    magicComments: [],
+    title: undefined,
+    showLineNumbers: undefined,
+  }), [diagramMarkdown]);
 
-  useEffect(() => {
-    if (copyStatus === 'idle') {
-      return undefined;
-    }
-
-    const timeout = window.setTimeout(() => setCopyStatus('idle'), 1800);
-    return () => window.clearTimeout(timeout);
-  }, [copyStatus]);
-
-  const handleCopy = useCallback(async () => {
-    if (!diagramMarkdown) {
-      return;
-    }
-
-    try {
-      await copyTextToClipboard(diagramMarkdown);
-      setCopyStatus('copied');
-    } catch {
-      setCopyStatus('failed');
-    }
-  }, [diagramMarkdown]);
+  const wordWrap = useMemo(() => ({
+    codeBlockRef: {current: null},
+    isEnabled: false,
+    isCodeScrollable: false,
+    toggle: () => {},
+  }), []);
 
   return (
-    <div className={styles.topActions} aria-label="Diagram actions">
-      <button
-        type="button"
-        className={`${styles.viewerButton} ${copyStatus === 'copied' ? styles.viewerButtonSuccess : ''}`}
-        onClick={handleCopy}
-        disabled={!diagramMarkdown}
-        aria-label={copyStatus === 'copied' ? 'Copied Mermaid markdown' : 'Copy Mermaid markdown'}
-        title={copyStatus === 'copied' ? 'Copied Mermaid markdown' : 'Copy Mermaid markdown'}
-      >
-        <CopyIcon />
-      </button>
-      <span className={styles.srOnly} aria-live="polite">
-        {copyStatus === 'copied' ? 'Mermaid markdown copied.' : ''}
-        {copyStatus === 'failed' ? 'Unable to copy Mermaid markdown.' : ''}
-      </span>
+    <div className={`${styles.topActions} theme-code-block`} aria-label="Diagram actions">
+      <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
+        <CodeBlockButtons className={styles.codeBlockButtons} />
+      </CodeBlockContextProvider>
     </div>
   );
 }
