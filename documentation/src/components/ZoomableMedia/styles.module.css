@@ -1,28 +1,40 @@
-.mermaidZoomTarget {
+.zoomTarget {
   position: relative;
   border-radius: 6px;
+  --zoomable-media-control-hover-border-color: var(--ifm-color-emphasis-400);
+  --zoomable-media-control-hover-color: var(--ifm-font-color-base);
 }
 
-.mermaidInteractiveTarget {
+.imageZoomTarget {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.zoomTargetPending {
+  cursor: default;
+}
+
+.zoomTargetReady {
+  cursor: zoom-in;
+}
+
+.interactiveTarget {
   border-radius: inherit;
   outline: none;
 }
 
-.mermaidZoomTargetPending {
-  cursor: default;
+.imageInteractiveTarget {
+  display: inline-block;
+  max-width: 100%;
 }
 
-.mermaidZoomTargetReady {
-  cursor: zoom-in;
-}
-
-.mermaidZoomTarget:focus-visible,
-.mermaidInteractiveTarget:focus-visible {
+.interactiveTarget:focus-visible {
   box-shadow: 0 0 0 3px var(--ifm-color-primary-lightest);
 }
 
-.mermaidZoomTargetReady:hover .inlineActions,
-.mermaidZoomTargetReady:focus-within .inlineActions {
+.zoomTargetReady:hover .inlineActions,
+.zoomTargetReady:focus-within .inlineActions {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
@@ -51,8 +63,8 @@
   isolation: isolate;
   background: var(--ifm-color-emphasis-100, #f5f6f7);
   color: var(--ifm-font-color-base);
-  --mermaid-viewer-control-hover-border-color: var(--ifm-color-emphasis-400);
-  --mermaid-viewer-control-hover-color: var(--ifm-font-color-base);
+  --zoomable-media-control-hover-border-color: var(--ifm-color-emphasis-400);
+  --zoomable-media-control-hover-color: var(--ifm-font-color-base);
 }
 
 :global([data-theme='dark']) .overlay {
@@ -109,8 +121,8 @@
 .inlineFullscreenButton:hover,
 .inlineFullscreenButton:focus-visible {
   background: var(--ifm-background-surface-color);
-  border-color: var(--mermaid-viewer-control-hover-border-color);
-  color: var(--mermaid-viewer-control-hover-color);
+  border-color: var(--zoomable-media-control-hover-border-color);
+  color: var(--zoomable-media-control-hover-color);
   outline: none;
 }
 
@@ -152,8 +164,8 @@
 .viewerButton:hover,
 .viewerButton:focus-visible {
   background: var(--ifm-background-surface-color);
-  border-color: var(--mermaid-viewer-control-hover-border-color);
-  color: var(--mermaid-viewer-control-hover-color);
+  border-color: var(--zoomable-media-control-hover-border-color);
+  color: var(--zoomable-media-control-hover-color);
   outline: none;
 }
 
@@ -259,12 +271,12 @@
   justify-content: center;
 }
 
-.diagram {
+.diagramFrame,
+.imageFrame {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  max-width: min(92vw, 1200px);
   max-height: 82vh;
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: 8px;
@@ -273,12 +285,30 @@
   padding: 1rem;
 }
 
-.diagram svg {
+.diagramFrame {
+  max-width: min(92vw, 1200px);
+}
+
+.imageFrame {
+  max-width: min(92vw, 1400px);
+}
+
+.diagramFrame svg,
+.imageFrame img {
   display: block;
   width: auto;
+  height: auto;
+}
+
+.diagramFrame svg {
   max-width: calc(min(92vw, 1200px) - 2rem);
   max-height: calc(82vh - 2rem);
-  height: auto;
+}
+
+.imageFrame img {
+  max-width: calc(min(92vw, 1400px) - 2rem);
+  max-height: calc(82vh - 2rem);
+  user-select: none;
 }
 
 @media (max-width: 700px) {
@@ -303,8 +333,10 @@
     pointer-events: auto;
   }
 
-  .diagram,
-  .diagram svg {
+  .diagramFrame,
+  .diagramFrame svg,
+  .imageFrame,
+  .imageFrame img {
     max-width: 94vw;
     max-height: 76vh;
   }
