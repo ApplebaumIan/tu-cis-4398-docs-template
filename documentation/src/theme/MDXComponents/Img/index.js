@@ -7,6 +7,7 @@ import {
   useControls,
   useTransformComponent,
 } from 'react-zoom-pan-pinch';
+import useModalFocusTrap from '@site/src/utils/useModalFocusTrap';
 import styles from './styles.module.css';
 
 const MIN_SCALE = 0.2;
@@ -193,32 +194,17 @@ function ImagePanZoomControls() {
 
 function ImageFullscreenViewer({alt, src, srcSet, sizes, onClose}) {
   const closeButtonRef = useRef(null);
-  const previousFocusRef = useRef(null);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    previousFocusRef.current = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', handleKeyDown);
-    closeButtonRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener('keydown', handleKeyDown);
-      previousFocusRef.current?.focus();
-    };
-  }, [onClose]);
+  const dialogRef = useModalFocusTrap({initialFocusRef: closeButtonRef, onClose});
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Fullscreen image">
+    <div
+      className={styles.overlay}
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Fullscreen image"
+      tabIndex={-1}
+    >
       <button
         type="button"
         className={`${styles.viewerButton} ${styles.closeButton}`}
@@ -266,31 +252,33 @@ function ImageFullscreenViewer({alt, src, srcSet, sizes, onClose}) {
 export default function MDXImgWrapper(props) {
   const wrapperRef = useRef(null);
   const [fullscreenImage, setFullscreenImage] = useState(false);
-  const [isLinkedImage, setIsLinkedImage] = useState(false);
+  const [isLinkedImage, setIsLinkedImage] = useState(true);
   const {alt, src, srcSet, sizes} = props;
   const canOpen = Boolean(src) && !isLinkedImage;
 
+  const isInsideLink = useCallback(() => Boolean(wrapperRef.current?.closest('a')), []);
+
   useEffect(() => {
-    setIsLinkedImage(Boolean(wrapperRef.current?.closest('a')));
-  }, []);
+    setIsLinkedImage(isInsideLink());
+  }, [isInsideLink]);
 
   const openFullscreen = useCallback(() => {
-    if (canOpen) {
+    if (canOpen && !isInsideLink()) {
       setFullscreenImage(true);
     }
-  }, [canOpen]);
+  }, [canOpen, isInsideLink]);
 
   const handleClick = useCallback((event) => {
-    if (!canOpen) {
+    if (!canOpen || isInsideLink()) {
       return;
     }
 
     event.preventDefault();
     openFullscreen();
-  }, [canOpen, openFullscreen]);
+  }, [canOpen, isInsideLink, openFullscreen]);
 
   const handleKeyDown = useCallback((event) => {
-    if (!canOpen || event.target !== event.currentTarget) {
+    if (!canOpen || isInsideLink() || event.target !== event.currentTarget) {
       return;
     }
 
@@ -298,7 +286,7 @@ export default function MDXImgWrapper(props) {
       event.preventDefault();
       openFullscreen();
     }
-  }, [canOpen, openFullscreen]);
+  }, [canOpen, isInsideLink, openFullscreen]);
 
   return (
     <>

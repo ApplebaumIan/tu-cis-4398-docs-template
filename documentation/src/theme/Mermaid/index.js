@@ -11,6 +11,7 @@ import {
   useControls,
   useTransformComponent,
 } from 'react-zoom-pan-pinch';
+import useModalFocusTrap from '@site/src/utils/useModalFocusTrap';
 import styles from './styles.module.css';
 
 const MIN_SCALE = 0.2;
@@ -368,32 +369,17 @@ function MermaidPanZoomControls() {
 
 function MermaidFullscreenViewer({diagramMarkup, diagramMarkdown, onClose}) {
   const closeButtonRef = useRef(null);
-  const previousFocusRef = useRef(null);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    previousFocusRef.current = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', handleKeyDown);
-    closeButtonRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener('keydown', handleKeyDown);
-      previousFocusRef.current?.focus();
-    };
-  }, [onClose]);
+  const dialogRef = useModalFocusTrap({initialFocusRef: closeButtonRef, onClose});
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Fullscreen Mermaid diagram">
+    <div
+      className={styles.overlay}
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Fullscreen Mermaid diagram"
+      tabIndex={-1}
+    >
       <MermaidViewerActions diagramMarkdown={diagramMarkdown} />
       <button
         type="button"
