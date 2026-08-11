@@ -98,14 +98,18 @@ const config = {
     [
       'redocusaurus',
       {
-        // Plugin Options for loading OpenAPI files
         specs: [
           {
-            id: 'using-single-yaml',
-            spec: 'static/openapi.yml.yaml',
+            id: 'openapi-main',
+            spec: 'docs/api-specification/openapi/index.openapi.yaml',
             route: '/api/',
           },
         ],
+        // Load OpenAPI files from the student-authored API docs folder.
+        openapi: {
+          path: 'docs/api-specification/openapi',
+          routeBasePath: '/api',
+        },
         // Theme Options for modifying how redoc renders them
         theme: {
           // Change with your site colors

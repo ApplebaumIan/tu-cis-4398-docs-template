@@ -1,19 +1,19 @@
 # Contributors Component
 
-import Contributors from "../../src/components/Contributors";
+import Contributors from "@site/src/components/Contributors";
 
 This component uses contrib.rocks to display a list of contributors for the project. By default it uses the repository specified by the environment variables `ORG_NAME` and `PROJECT_NAME` set at build time by GitHub Actions in the docusaurus.config.js file, but you can also specify a different repository.
 
 ## Example Usage
 
 ```jsx
-import Contributors from "../../src/components/Contributors";
+import Contributors from "@site/src/components/Contributors";
 <Contributors />
 ```
 <Contributors />
 
 ```jsx
-import Contributors from "../../src/components/Contributors";
+import Contributors from "@site/src/components/Contributors";
 <Contributors orgName={"facebook"} projectName={"docusaurus"} />
 ```
 <Contributors orgName={"facebook"} projectName={"docusaurus"} />
