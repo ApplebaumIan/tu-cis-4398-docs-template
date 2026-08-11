@@ -1,0 +1,8 @@
+{
+  "label": "Template Features",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Template-specific features provided for CIS project documentation."
+  }
+}
