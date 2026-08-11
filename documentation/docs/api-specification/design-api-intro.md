@@ -1,41 +1,37 @@
 ---
 sidebar_position: 1
-description: What should be in this section.
+description: API design guidance and project-specific API documentation.
 ---
 
-Design Document - Part II API
-=============================
+# API Design
 
-**Purpose**
+:::caution Starter content - API assignment
+This page is not ready for submission until your team replaces this starter outline with project-specific API design content and removes this callout.
 
-This Design Document gives the complete design of the software implementation. This information should be in structured comments (e.g. Javadoc) in the source files. We encourage the use of a documentation generation tool to generate a draft of your API that you can augment to include the following details.
+- Describe the public modules, classes, services, or endpoints your project exposes.
+- Explain how the API fits into the architecture from Part I.
+- Document parameters, return values, exceptions, preconditions, and postconditions where relevant.
+:::
 
-**Requirements**
+## Purpose
 
-In addition to the general documentation requirements the Design Document - Part II API will contain:
+The Design Document - Part II API gives the complete design of the software implementation. Prefer generating a first draft from structured comments, then augmenting it with design context that generated output cannot provide by itself.
 
-General review of the software architecture for each module specified in Design Document - Part I Architecture. Please include your class diagram as an important reference.
+## Architecture Review
 
-**For each class define the data fields, methods.**
+Replace this section with a review of the software architecture for each module specified in Design Document - Part I Architecture. Include class diagrams or service diagrams as references where they help.
 
-The purpose of the class.
+## API Documentation Requirements
 
-The purpose of each data field.
+For each public class, module, service, or endpoint, document:
 
-The purpose of each method
+- purpose;
+- data fields or request and response fields;
+- methods or operations;
+- preconditions and postconditions;
+- parameters and data types;
+- return values or output variables;
+- exceptions or error responses;
+- recovery procedures for user-facing errors.
 
-Pre-conditions if any.
-
-Post-conditions if any.
-
-Parameters and data types
-
-Return value and output variables
-
-Exceptions thrown\* (PLEASE see note below for details).
-
-An example of an auto-generated and then augmented API specification is here ([Fiscal Design Document 2\_API.docx](https://templeu.instructure.com/courses/106563/files/16928898?wrap=1 "Fiscal Design Document 2_API.docx") )
-
-This group developed their API documentation by hand ([Design Document Part 2 API-1\_MovieMatch.docx](https://templeu.instructure.com/courses/106563/files/16928899?wrap=1 "Design Document Part 2 API-1_MovieMatch.docx") )
-
-\*At the top level, or where appropriate, all exceptions should be caught and an error message that is meaningful to the user generated. It is not OK to say ("xxxx has encountered a problem and will now close (OK?)". Error messages and recovery procedures should be documented in the User’s Manual.
+At the top level, or where appropriate, all exceptions should be caught and transformed into a meaningful user-facing error message. Avoid vague error messages that do not explain what happened or what the user can do next.

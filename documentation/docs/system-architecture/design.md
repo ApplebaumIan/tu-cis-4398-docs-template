@@ -2,26 +2,32 @@
 sidebar_position: 1
 ---
 
-**Purpose**
+# System Design
+
+:::caution Starter content - Architecture assignment
+This page is not ready for submission until your team replaces this starter outline with project-specific architecture content and removes this callout.
+
+- Explain how the requirements map to the system design.
+- Include diagrams for components, classes, data flow, and persistence where relevant.
+- Describe important algorithms, design choices, and tradeoffs.
+:::
+
+## Purpose
 
 The Design Document - Part I Architecture describes the software architecture and how the requirements are mapped into the design. This document will be a combination of diagrams and text that describes what the diagrams are showing.
 
-**Requirements**
+## Architecture Content
 
-In addition to the general requirements the Design Document - Part I Architecture will contain:
+Replace this section with a project-specific architecture narrative. Include the major components of your system and explain what each component owns.
 
-A description the different components and their interfaces. For example: client, server, database.
+## Component and Interface Design
 
-For each component provide class diagrams showing the classes to be developed (or used) and their relationship.
+Describe the different components and their interfaces. Include class diagrams for classes your team will develop or use directly.
 
-Sequence diagrams showing the data flow for _all_ use cases. One sequence diagram corresponds to one use case and different use cases should have different corresponding sequence diagrams.
+## Sequence and Data Flow Diagrams
 
-Describe algorithms employed in your project, e.g. neural network paradigm, training and training data set, etc.
+Provide sequence diagrams showing the data flow for the major use cases. Each important use case should have its own sequence diagram or clearly labeled scenario.
 
-If there is a database:
+## Algorithms and Data Design
 
-Entity-relation diagram.
-
-Table design.
-
-A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance.
+Describe important algorithms and data design decisions. If the project uses a database, include an entity-relationship diagram and table or collection design.
