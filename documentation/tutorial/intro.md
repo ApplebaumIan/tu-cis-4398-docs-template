@@ -74,7 +74,6 @@ yarn start
 
 4. **View your site**: Codespaces will provide a preview URL (usually shown in a popup)
 
-:::mermaid
 
 :::warning **Note**
 Only you can see your Codespace and it's preview URL. To share your work, push changes to GitHub.
