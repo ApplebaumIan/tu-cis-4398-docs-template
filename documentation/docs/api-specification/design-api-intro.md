@@ -1,37 +1,30 @@
 ---
 sidebar_position: 1
-description: API design guidance and project-specific API documentation.
+description: Overview of the required HTTP API and internal code contracts.
 ---
 
-# API Design
+# API Specification
 
 :::caution Starter content - API assignment
-This page is not ready for submission until your team replaces this starter outline with project-specific API design content and removes this callout.
+This page is not ready for submission until your team replaces this starter outline with a project-specific API contract overview and removes this callout.
 
-- Describe the public modules, classes, services, or endpoints your project exposes.
-- Explain how the API fits into the architecture from Part I.
-- Document parameters, return values, exceptions, preconditions, and postconditions where relevant.
+- Maintain both the HTTP API Contract and the Internal Code Contract.
+- Explain how external clients talk to the system and how core code is structured internally.
+- Keep both contracts synchronized with the implementation.
 :::
 
-## Purpose
+## HTTP API Contract
 
-The Design Document - Part II API gives the complete design of the software implementation. Prefer generating a first draft from structured comments, then augmenting it with design context that generated output cannot provide by itself.
+Replace this section with a short overview of the external REST contract your system exposes. The OpenAPI Reference page should contain the detailed endpoint contract.
 
-## Architecture Review
+Document all implemented endpoints, request and response formats, error responses, authentication mechanisms, and meaningful operation descriptions.
 
-Replace this section with a review of the software architecture for each module specified in Design Document - Part I Architecture. Include class diagrams or service diagrams as references where they help.
+## Internal Code Contract
 
-## API Documentation Requirements
+Replace this section with a short overview of the internal code contracts for your core classes, modules, services, or public APIs. The Internal Code Contracts page should contain the detailed class and method documentation.
 
-For each public class, module, service, or endpoint, document:
+Document purpose, parameters, returns, exceptions, usage, preconditions, and postconditions where applicable.
 
-- purpose;
-- data fields or request and response fields;
-- methods or operations;
-- preconditions and postconditions;
-- parameters and data types;
-- return values or output variables;
-- exceptions or error responses;
-- recovery procedures for user-facing errors.
+## Synchronization
 
-At the top level, or where appropriate, all exceptions should be caught and transformed into a meaningful user-facing error message. Avoid vague error messages that do not explain what happened or what the user can do next.
+If implementation changes, update the related contract. Outdated API documentation is incomplete documentation.

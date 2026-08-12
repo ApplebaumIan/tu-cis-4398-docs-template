@@ -5,21 +5,25 @@ sidebar_position: 3
 # General Requirements
 
 :::caution Starter content - Requirements assignment
-This page is not ready for submission until your team replaces this starter outline with project-specific requirements and removes this callout.
+This page is not ready for submission until your team replaces this starter outline with project-specific constraints and removes this callout.
 
-- Define project-wide functional requirements.
-- Define project-wide non-functional requirements such as performance, security, reliability, usability, or accessibility.
-- Make each requirement measurable enough to test later.
+- Document technical or operational constraints the project must follow.
+- Keep feature behavior and quality attributes in the Features and Requirements page.
+- Include required technologies, platform compatibility, legal or regulatory standards, and other external constraints.
 :::
 
-## Functional Requirements
+## Technology Stack
 
-Replace this section with requirements that describe what the system must do.
+Replace this section with required technologies, programming languages, frameworks, services, or tools the project must use.
 
-## Non-Functional Requirements
+## Platform Compatibility
 
-Replace this section with requirements that describe how well the system must operate.
+Replace this section with required operating systems, browsers, devices, hardware, deployment targets, or runtime environments.
 
-## Constraints
+## Legal and Regulatory Standards
 
-Document technical, course, hardware, software, policy, or deployment constraints that affect the project.
+Replace this section with any legal, privacy, accessibility, security, institutional, or industry standards the project must follow.
+
+## Other Operational Constraints
+
+Replace this section with any other external constraints, such as required integrations, department resources, hardware availability, budget, or network assumptions.

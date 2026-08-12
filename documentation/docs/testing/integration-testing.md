@@ -8,6 +8,7 @@ This page is not ready for submission until your team replaces this starter outl
 
 - Connect integration tests to use cases and sequence diagrams.
 - Describe how major components interact during each test.
+- Provide external input through test fixtures or mock objects and verify results through automated checks or mock objects.
 - Avoid tests that require manual data entry or manual interpretation of results.
 :::
 

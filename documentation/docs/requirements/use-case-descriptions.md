@@ -8,8 +8,8 @@ sidebar_position: 5
 This page is not ready for submission until your team replaces this starter outline with project-specific use cases and removes this callout.
 
 - Identify the actors who use or interact with the system.
-- Document the main flow for each important use case.
-- Include preconditions, postconditions, and alternate or error flows where relevant.
+- Document the trigger, normal flow, alternate flows, preconditions, and postconditions for each important use case.
+- Use user stories when they help clarify the actor's goal.
 :::
 
 ## Actors
@@ -26,10 +26,14 @@ Replace this section with one subsection per major use case.
 
 **Goal:** Replace with the user's goal.
 
+**User story:** As a [type of user], I want [some goal] so that [some reason].
+
+**Triggering event:** Replace with the action that starts the use case.
+
 **Preconditions:** Replace with what must be true before this use case starts.
 
-**Main flow:** Replace with the normal sequence of steps.
+**Normal flow:** Replace with the step-by-step happy path where the actor achieves the goal.
 
-**Alternate flows:** Replace with important variations or failure paths.
+**Alternate flows:** Replace with other scenarios, user errors, system errors, and exception paths.
 
 **Postconditions:** Replace with what should be true after the use case completes.
