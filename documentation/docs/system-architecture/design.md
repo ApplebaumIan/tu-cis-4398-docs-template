@@ -8,7 +8,7 @@ sidebar_position: 1
 This page is not ready for submission until your team replaces this starter outline with project-specific architecture content and removes this callout.
 
 - Explain how the requirements map to the system design.
-- Include diagrams for components, classes, data flow, and persistence where relevant.
+- Summarize the major components and interfaces, then put detailed class and sequence diagrams on their dedicated pages.
 - Describe important algorithms, design choices, and tradeoffs.
 :::
 
@@ -22,11 +22,11 @@ Replace this section with a project-specific architecture narrative. Include the
 
 ## Component and Interface Design
 
-Describe the different components and their interfaces. Include class diagrams for classes your team will develop or use directly.
+Describe the different components and their interfaces. Put detailed class diagrams on the Class Diagrams page.
 
 ## Sequence and Data Flow Diagrams
 
-Provide sequence diagrams showing the data flow for the major use cases. Each important use case should have its own sequence diagram or clearly labeled scenario.
+Summarize how the system handles major use cases. Put detailed sequence diagrams on the Sequence Diagrams page.
 
 ## Algorithms and Data Design
 
