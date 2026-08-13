@@ -16,6 +16,10 @@
   "bin": {
     "create-project-docs": "./.bin/bin.js"
   },
+  "resolutions": {
+    "webpack": "5.101.3",
+    "**/webpack": "5.101.3"
+  },
   "dependencies": {
     "@tu-cis-project-docs/docusaurus": "0.1.0",
     "@docusaurus/core": "3.9.2",
@@ -29,7 +33,8 @@
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "webpack": "5.101.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",

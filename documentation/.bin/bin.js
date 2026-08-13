@@ -6,6 +6,8 @@ const path = require("path");
 
 const CLI_NAME = "create-project-docs";
 const REPO_URL = "https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git";
+const RUNTIME_PACKAGE_NAME = "@tu-cis-project-docs/docusaurus";
+const COMPAT_WEBPACK_VERSION = "5.101.3";
 
 const run = (cmd) => {
   try {
@@ -159,11 +161,18 @@ function runDoctor(targetDir) {
     },
     {
       label: "runtime package dependency is configured",
-      passed: Boolean(packageJson?.dependencies?.["@tu-cis-project-docs/docusaurus"]),
+      passed: Boolean(packageJson?.dependencies?.[RUNTIME_PACKAGE_NAME]),
     },
     {
       label: "Docusaurus config uses the runtime config factory",
       passed: configContents.includes("createTuCisProjectDocsConfig"),
+    },
+    {
+      label: `Webpack ${COMPAT_WEBPACK_VERSION} compatibility pin is configured`,
+      passed:
+        packageJson?.dependencies?.webpack === COMPAT_WEBPACK_VERSION &&
+        packageJson?.resolutions?.webpack === COMPAT_WEBPACK_VERSION &&
+        packageJson?.resolutions?.["**/webpack"] === COMPAT_WEBPACK_VERSION,
     },
   ];
 
@@ -176,6 +185,11 @@ function runDoctor(targetDir) {
 
   if (failed) {
     console.log("\nDoctor found issues. Re-run after applying the relevant template migration.");
+    console.log(
+      `\nFor the Webpack compatibility issue, package.json should include:\n` +
+        `  "dependencies": { "webpack": "${COMPAT_WEBPACK_VERSION}" }\n` +
+        `  "resolutions": { "webpack": "${COMPAT_WEBPACK_VERSION}", "**/webpack": "${COMPAT_WEBPACK_VERSION}" }`
+    );
     process.exit(1);
   }
 
