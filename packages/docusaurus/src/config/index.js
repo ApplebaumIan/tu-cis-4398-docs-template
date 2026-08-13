@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const {execFileSync} = require('child_process');
 
 const DEFAULT_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg';
 const DEFAULT_PROJECT_NAME = 'docs-dev-mode';
@@ -86,6 +87,22 @@ function mergeClassicThemeOptions(baseThemeOptions, overrideThemeOptions = {}) {
   };
 }
 
+function isGitWorkTree(directory) {
+  try {
+    return execFileSync(
+      'git',
+      ['rev-parse', '--is-inside-work-tree'],
+      {
+        cwd: directory,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      },
+    ).trim() === 'true';
+  } catch {
+    return false;
+  }
+}
+
 function createTuCisProjectDocsConfig(options = {}) {
   const siteDir = options.siteDir ?? process.cwd();
   const organizationName = options.organizationName ?? process.env.ORG_NAME;
@@ -98,6 +115,7 @@ function createTuCisProjectDocsConfig(options = {}) {
   const customCss = resolveCustomCss(siteDir, options.customCss);
   const classicThemeOptions = {customCss};
   const {theme: classicThemeOverride, ...classicOverrides} = options.classic ?? {};
+  const enableGitLastUpdate = options.enableGitLastUpdate ?? isGitWorkTree(siteDir);
   const future = {
     ...options.future,
     experimental_faster: {
@@ -210,7 +228,7 @@ function createTuCisProjectDocsConfig(options = {}) {
         require.resolve('@docusaurus/preset-classic'),
         {
           docs: {
-            showLastUpdateAuthor: true,
+            showLastUpdateAuthor: enableGitLastUpdate,
             sidebarPath: options.sidebarPath ?? path.join(siteDir, 'sidebars.js'),
             routeBasePath: 'docs',
             path: 'docs',
