@@ -3,6 +3,7 @@ const path = require('path');
 
 const DEFAULT_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg';
 const DEFAULT_PROJECT_NAME = 'docs-dev-mode';
+const PACKAGE_CUSTOM_CSS = path.resolve(__dirname, '..', '..', 'styles', 'custom.css');
 
 function toTitle(value) {
   return value
@@ -45,17 +46,44 @@ function mergeThemeConfig(baseThemeConfig, overrideThemeConfig = {}) {
   };
 }
 
-function resolveLocalCustomCss(siteDir, customCss) {
+function toArray(value) {
+  if (value === undefined || value === null) {
+    return [];
+  }
+
+  return Array.isArray(value) ? value : [value];
+}
+
+function resolveCustomCss(siteDir, customCss) {
   if (customCss === false) {
-    return undefined;
+    return [PACKAGE_CUSTOM_CSS];
   }
 
   if (customCss) {
-    return customCss;
+    return [
+      PACKAGE_CUSTOM_CSS,
+      ...toArray(customCss),
+    ];
   }
 
   const defaultLocalCss = path.join(siteDir, 'src', 'css', 'custom.css');
-  return fs.existsSync(defaultLocalCss) ? defaultLocalCss : undefined;
+  return [
+    PACKAGE_CUSTOM_CSS,
+    ...(fs.existsSync(defaultLocalCss) ? [defaultLocalCss] : []),
+  ];
+}
+
+function mergeClassicThemeOptions(baseThemeOptions, overrideThemeOptions = {}) {
+  const {customCss: overrideCustomCss, ...overrideRest} = overrideThemeOptions;
+
+  return {
+    ...baseThemeOptions,
+    ...overrideRest,
+    customCss: [
+      ...toArray(baseThemeOptions.customCss),
+      ...toArray(overrideCustomCss),
+    ],
+  };
 }
 
 function createTuCisProjectDocsConfig(options = {}) {
@@ -67,8 +95,9 @@ function createTuCisProjectDocsConfig(options = {}) {
   const repositoryUrl = organizationName && projectName
     ? `https://github.com/${organizationName}/${projectName}`
     : undefined;
-  const localCustomCss = resolveLocalCustomCss(siteDir, options.customCss);
-  const classicThemeOptions = localCustomCss ? {customCss: localCustomCss} : {};
+  const customCss = resolveCustomCss(siteDir, options.customCss);
+  const classicThemeOptions = {customCss};
+  const {theme: classicThemeOverride, ...classicOverrides} = options.classic ?? {};
   const future = {
     ...options.future,
     experimental_faster: {
@@ -188,8 +217,8 @@ function createTuCisProjectDocsConfig(options = {}) {
             editUrl: options.editUrl ?? (repositoryUrl ? `${repositoryUrl}/edit/main/documentation/` : undefined),
             ...options.docs,
           },
-          theme: classicThemeOptions,
-          ...options.classic,
+          ...classicOverrides,
+          theme: mergeClassicThemeOptions(classicThemeOptions, classicThemeOverride),
         },
       ],
       [
@@ -217,6 +246,10 @@ function createTuCisProjectDocsConfig(options = {}) {
           organizationName,
           projectName,
           ...options.preset,
+          theme: {
+            loadStyles: false,
+            ...options.preset?.theme,
+          },
         },
       ],
       ...(options.presets ?? []),

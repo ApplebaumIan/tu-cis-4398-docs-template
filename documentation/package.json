@@ -21,7 +21,7 @@
     "**/webpack": "5.101.3"
   },
   "dependencies": {
-    "@tu-cis-project-docs/docusaurus": "0.1.0",
+    "@tu-cis-project-docs/docusaurus": "0.1.1",
     "@docusaurus/core": "3.9.2",
     "@docusaurus/plugin-content-docs": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",

@@ -11,6 +11,10 @@ function resolveProjectReadme(siteDir) {
     ?? path.resolve(__dirname, '..', 'fallbacks', 'ProjectReadme.mdx');
 }
 
+function resolvePackageStylesheet() {
+  return path.resolve(__dirname, '..', '..', 'styles', 'custom.css');
+}
+
 function componentAliasPath(componentName) {
   return path.resolve(__dirname, '..', 'components', componentName);
 }
@@ -55,7 +59,7 @@ function filterIncompatibleProgressPlugins(config, configureWebpackUtils) {
   return plugins.length === config.plugins.length ? null : plugins;
 }
 
-module.exports = function tuCisProjectDocsTheme(context) {
+module.exports = function tuCisProjectDocsTheme(context, options = {}) {
   const componentsPath = path.resolve(__dirname, '..', 'components');
 
   return {
@@ -66,9 +70,7 @@ module.exports = function tuCisProjectDocsTheme(context) {
     },
 
     getClientModules() {
-      return [
-        path.resolve(__dirname, '..', '..', 'styles', 'custom.css'),
-      ];
+      return options.loadStyles === false ? [] : [resolvePackageStylesheet()];
     },
 
     configureWebpack(config, isServer, configureWebpackUtils) {
