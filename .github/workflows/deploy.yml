@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
-          cache-dependency-path: documentation/yarn.lock
+          cache-dependency-path: yarn.lock
 
       - name: Restore revision history cache
         uses: actions/cache@v4
@@ -40,7 +40,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: documentation/.docusaurus
-          key: docusaurus-${{ runner.os }}-${{ hashFiles('documentation/yarn.lock', 'documentation/docusaurus.config.js', 'documentation/sidebars.js', 'documentation/src/**/*', 'documentation/plugins/**/*', 'documentation/docs/**/*', 'documentation/tutorial/**/*') }}
+          key: docusaurus-${{ runner.os }}-${{ hashFiles('yarn.lock', 'documentation/docusaurus.config.js', 'documentation/sidebars.js', 'documentation/src/**/*', 'documentation/docs/**/*', 'documentation/static/**/*', 'packages/docusaurus/**/*') }}
 
       - name: Create or verify gh-pages branch
         run: |
@@ -62,11 +62,11 @@ jobs:
           fi
 
       - name: Install Dependencies
-        run: cd documentation && yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Generate Dependencies Page
         if: github.repository_owner == 'applebaumian'
-        run: node documentation/scripts/generate-dependencies.js
+        run: node packages/docusaurus/scripts/generate-dependencies.js
 
       - name: Deploy to GitHub Pages
         env:

@@ -23,11 +23,27 @@ npx create-project-docs new my-project
 cd my-project
 ```
 
+### Check an existing project
+
+```bash
+npx create-project-docs doctor
+```
+
 ### Options
 
 - `--force` - Overwrite existing documentation folder
 - `--skip-install` - Skip running yarn install
 - `--help` - Show help
+
+## Runtime Package
+
+Reusable Docusaurus behavior comes from:
+
+```text
+@tu-cis-project-docs/docusaurus
+```
+
+Student-owned project documentation remains local in `documentation/docs` and `documentation/static`. Runtime updates should be delivered through normal package upgrades once the package is published.
 
 ### Installation
 
@@ -66,4 +82,3 @@ $ GIT_USER=<Your GitHub username> yarn deploy
 ```
 
 If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-

@@ -22,14 +22,20 @@ const usage = () => {
   console.log(`
 Usage:
   npx ${CLI_NAME} add [--path <dir>] [--force] [--skip-install]
+  npx ${CLI_NAME} init [--path <dir>] [--force] [--skip-install]
   npx ${CLI_NAME} new <project-name> [--force] [--skip-install]
+  npx ${CLI_NAME} doctor [--path <dir>]
 
 What it does:
-  Copies the template repo's /documentation folder into a target project.
+  Scaffolds a CIS project documentation site.
+  Student-owned docs and assets stay in /documentation.
+  Reusable runtime behavior is provided by @tu-cis-project-docs/docusaurus.
 
 Commands:
   add                 Add /documentation into an existing project (default: cwd)
+  init                Alias for add
   new <project-name>  Create a new directory, then add /documentation into it
+  doctor              Check whether an existing project uses the package runtime
 
 Options:
   --path <dir>       Target project directory (add only; default: cwd)
@@ -46,6 +52,9 @@ Examples:
 
   # Create a new project with docs
   npx ${CLI_NAME} new my-project
+
+  # Check an existing project
+  npx ${CLI_NAME} doctor --path ../my-project
 `);
 };
 
@@ -116,9 +125,66 @@ function copyDocumentationInto(targetDir) {
   console.log(`  PROJECT_NAME=${path.basename(path.resolve(targetDir))} yarn start`);
 }
 
+function readJson(filePath) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function runDoctor(targetDir) {
+  const directConfigPath = path.join(targetDir, "docusaurus.config.js");
+  const docsDir = fs.existsSync(directConfigPath)
+    ? targetDir
+    : path.join(targetDir, "documentation");
+  const packageJsonPath = path.join(docsDir, "package.json");
+  const configPath = path.join(docsDir, "docusaurus.config.js");
+  const packageJson = readJson(packageJsonPath);
+  const configContents = fs.existsSync(configPath)
+    ? fs.readFileSync(configPath, "utf8")
+    : "";
+  const checks = [
+    {
+      label: "documentation folder exists",
+      passed: fs.existsSync(docsDir) && fs.statSync(docsDir).isDirectory(),
+    },
+    {
+      label: "student docs folder exists",
+      passed: fs.existsSync(path.join(docsDir, "docs")),
+    },
+    {
+      label: "student static folder exists",
+      passed: fs.existsSync(path.join(docsDir, "static")),
+    },
+    {
+      label: "runtime package dependency is configured",
+      passed: Boolean(packageJson?.dependencies?.["@tu-cis-project-docs/docusaurus"]),
+    },
+    {
+      label: "Docusaurus config uses the runtime config factory",
+      passed: configContents.includes("createTuCisProjectDocsConfig"),
+    },
+  ];
+
+  let failed = false;
+  for (const check of checks) {
+    const status = check.passed ? "ok" : "missing";
+    console.log(`${status.padEnd(8)} ${check.label}`);
+    failed = failed || !check.passed;
+  }
+
+  if (failed) {
+    console.log("\nDoctor found issues. Re-run after applying the relevant template migration.");
+    process.exit(1);
+  }
+
+  console.log("\nDoctor found no obvious package-runtime setup issues.");
+}
+
 // -------------------- Command routing --------------------
 
-if (cmd === "add") {
+if (cmd === "add" || cmd === "init") {
   const targetDir = path.resolve(getArgValue("--path") || process.cwd());
 
   if (!fs.existsSync(targetDir)) {
@@ -131,6 +197,13 @@ if (cmd === "add") {
 
   ensureDirExists(targetDir);
   copyDocumentationInto(targetDir);
+  process.exit(0);
+}
+
+if (cmd === "doctor") {
+  const targetDir = path.resolve(getArgValue("--path") || process.cwd());
+  ensureDirExists(targetDir);
+  runDoctor(targetDir);
   process.exit(0);
 }
 

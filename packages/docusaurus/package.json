@@ -1,0 +1,74 @@
+{
+  "name": "@tu-cis-project-docs/docusaurus",
+  "version": "0.1.0",
+  "description": "Reusable Docusaurus runtime, theme, components, tutorial, and configuration for Temple University CIS project documentation.",
+  "license": "UNLICENSED",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git",
+    "directory": "packages/docusaurus"
+  },
+  "homepage": "https://github.com/ApplebaumIan/tu-cis-4398-docs-template#readme",
+  "bugs": {
+    "url": "https://github.com/ApplebaumIan/tu-cis-4398-docs-template/issues"
+  },
+  "keywords": [
+    "docusaurus",
+    "temple-university",
+    "cis",
+    "project-docs",
+    "capstone"
+  ],
+  "main": "./src/preset/index.js",
+  "exports": {
+    ".": "./src/preset/index.js",
+    "./config": "./src/config/index.js",
+    "./components": "./src/components/index.js",
+    "./theme": "./src/themePlugin/index.js",
+    "./revision-history": "./src/plugins/revision-history/index.js",
+    "./styles": "./styles/custom.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "styles",
+    "tutorial",
+    "tutorialSidebars.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "docusaurus2-dotenv-2": "^1.4.1",
+    "react-zoom-pan-pinch": "^4.0.3",
+    "redocusaurus": "^2.5.2"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "3.9.2",
+    "@docusaurus/plugin-content-docs": "3.9.2",
+    "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/theme-classic": "3.9.2",
+    "@docusaurus/theme-common": "3.9.2",
+    "@docusaurus/theme-live-codeblock": "3.9.2",
+    "@docusaurus/theme-mermaid": "3.9.2",
+    "@mdx-js/react": "3.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@docusaurus/core": "3.9.2",
+    "@docusaurus/module-type-aliases": "3.9.2",
+    "@docusaurus/plugin-content-docs": "3.9.2",
+    "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/theme-classic": "3.9.2",
+    "@docusaurus/theme-common": "3.9.2",
+    "@docusaurus/theme-live-codeblock": "3.9.2",
+    "@docusaurus/theme-mermaid": "3.9.2",
+    "@docusaurus/types": "3.9.2",
+    "@docusaurus/utils": "3.9.2",
+    "@mdx-js/react": "3.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "webpack": "^5.95.0"
+  }
+}

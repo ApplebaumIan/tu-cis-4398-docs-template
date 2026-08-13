@@ -1,0 +1,9 @@
+export {default as Contributors} from './Contributors';
+export {default as Figure} from './Figure';
+export {default as ForReview} from './ForReview';
+export {default as HomepageFeatures} from './HomepageFeatures';
+export {default as InlineDocs} from './InlineDocs';
+export {default as ProjectReadme} from './ReademeMD';
+export {default as ReademeMD} from './ReademeMD';
+export {default as RevisionHistory} from './RevisionHistory';
+export {default as ZoomableMedia} from './ZoomableMedia';

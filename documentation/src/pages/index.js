@@ -3,10 +3,9 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import ProjectReadme from "../components/ReademeMD";
 import styles from './index.module.css';
 import MDXContent from '@theme/MDXContent';
-import Contributors from '../components/Contributors';
+import {Contributors, ProjectReadme} from '@tu-cis-project-docs/docusaurus/components';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
