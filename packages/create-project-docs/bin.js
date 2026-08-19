@@ -1,17 +1,21 @@
 #!/usr/bin/env node
-const { execSync } = require("child_process");
+const {execSync} = require("child_process");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
 const CLI_NAME = "create-project-docs";
-const REPO_URL = "https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git";
+const DEFAULT_REPO_URL = "https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git";
+const REPO_URL = process.env.CREATE_PROJECT_DOCS_REPO_URL || DEFAULT_REPO_URL;
+const REPO_REF = process.env.CREATE_PROJECT_DOCS_REPO_REF || "";
+const TEMPLATE_PATH = process.env.CREATE_PROJECT_DOCS_TEMPLATE_PATH || "";
 const RUNTIME_PACKAGE_NAME = "@tu-cis-project-docs/docusaurus";
 const COMPAT_WEBPACK_VERSION = "5.101.3";
+const GENERATED_TEMPLATE_DIRS = new Set(["node_modules", "build", ".docusaurus", ".cache"]);
 
 const run = (cmd) => {
   try {
-    execSync(cmd, { stdio: "inherit" });
+    execSync(cmd, {stdio: "inherit"});
     return true;
   } catch (e) {
     console.error(`Failed: ${cmd}`);
@@ -19,6 +23,8 @@ const run = (cmd) => {
     return false;
   }
 };
+
+const quote = (value) => `"${String(value).replace(/(["\\$`])/g, "\\$1")}"`;
 
 const usage = () => {
   console.log(`
@@ -44,6 +50,11 @@ Options:
   --force            Overwrite existing ./documentation (or existing project dir for "new")
   --skip-install     Do not run "yarn install" in documentation
   -h, --help         Show help
+
+Development environment variables:
+  CREATE_PROJECT_DOCS_TEMPLATE_PATH  Copy /documentation from a local template checkout
+  CREATE_PROJECT_DOCS_REPO_URL       Clone a different template repository URL
+  CREATE_PROJECT_DOCS_REPO_REF       Checkout a branch, tag, or commit after cloning
 
 Examples:
   # Add docs to the current project
@@ -78,11 +89,51 @@ const force = args.includes("--force");
 const skipInstall = args.includes("--skip-install");
 
 function ensureDirExists(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, {recursive: true});
   if (!fs.statSync(dir).isDirectory()) {
     console.error(`Not a directory: ${dir}`);
     process.exit(1);
   }
+}
+
+function getTemplateDocumentationSource() {
+  if (TEMPLATE_PATH) {
+    const sourcePath = path.resolve(TEMPLATE_PATH);
+    const srcDocsDir = path.join(sourcePath, "documentation");
+    if (!fs.existsSync(srcDocsDir)) {
+      console.error(
+        `CREATE_PROJECT_DOCS_TEMPLATE_PATH must point at a template checkout containing /documentation:\n  ${sourcePath}`
+      );
+      process.exit(1);
+    }
+    return {srcDocsDir, cleanup: null};
+  }
+
+  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "tu-cis-project-docs-"));
+  const tmpRepoDir = path.join(tmpRoot, "template");
+
+  console.log("Cloning template into temp...");
+  if (!run(`git clone --depth 1 ${quote(REPO_URL)} ${quote(tmpRepoDir)}`)) process.exit(1);
+
+  if (REPO_REF) {
+    console.log(`Checking out template ref: ${REPO_REF}`);
+    if (!run(`cd ${quote(tmpRepoDir)} && git fetch --depth 1 origin ${quote(REPO_REF)}`)) process.exit(1);
+    if (!run(`cd ${quote(tmpRepoDir)} && git checkout FETCH_HEAD`)) process.exit(1);
+  }
+
+  const srcDocsDir = path.join(tmpRepoDir, "documentation");
+  if (!fs.existsSync(srcDocsDir)) {
+    console.error("Template repo did not contain /documentation as expected.");
+    process.exit(1);
+  }
+
+  return {
+    srcDocsDir,
+    cleanup: () => {
+      console.log("Cleaning up temp...");
+      fs.rmSync(tmpRoot, {recursive: true, force: true});
+    },
+  };
 }
 
 function copyDocumentationInto(targetDir) {
@@ -92,38 +143,34 @@ function copyDocumentationInto(targetDir) {
     if (!force) {
       console.error(
         `A "documentation" folder already exists at:\n  ${destDocsDir}\n` +
-          `Refusing to overwrite. Re-run with --force to replace it.`
+          'Refusing to overwrite. Re-run with --force to replace it.'
       );
       process.exit(1);
     }
-    fs.rmSync(destDocsDir, { recursive: true, force: true });
+    fs.rmSync(destDocsDir, {recursive: true, force: true});
   }
 
-  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "cis4398-docs-"));
-  const tmpRepoDir = path.join(tmpRoot, "template");
-
-  console.log(`Cloning template into temp...`);
-  if (!run(`git clone --depth 1 ${REPO_URL} "${tmpRepoDir}"`)) process.exit(1);
-
-  const srcDocsDir = path.join(tmpRepoDir, "documentation");
-  if (!fs.existsSync(srcDocsDir)) {
-    console.error(`Template repo did not contain /documentation as expected.`);
-    process.exit(1);
-  }
+  const {srcDocsDir, cleanup} = getTemplateDocumentationSource();
 
   console.log(`Copying documentation -> ${destDocsDir}`);
-  fs.cpSync(srcDocsDir, destDocsDir, { recursive: true });
+  fs.cpSync(srcDocsDir, destDocsDir, {
+    recursive: true,
+    filter: (src) => {
+      const relativePath = path.relative(srcDocsDir, src);
+      const topLevelName = relativePath.split(path.sep)[0];
+      return !GENERATED_TEMPLATE_DIRS.has(topLevelName);
+    },
+  });
 
-  console.log(`Cleaning up temp...`);
-  fs.rmSync(tmpRoot, { recursive: true, force: true });
+  cleanup?.();
 
   if (!skipInstall) {
-    console.log(`Installing docs dependencies (yarn install)...`);
-    if (!run(`cd "${destDocsDir}" && yarn install`)) process.exit(1);
+    console.log("Installing docs dependencies (yarn install)...");
+    if (!run(`cd ${quote(destDocsDir)} && yarn install`)) process.exit(1);
   }
 
   console.log("\nDone! Next steps:");
-  console.log(`  cd "${destDocsDir}"`);
+  console.log(`  cd ${quote(destDocsDir)}`);
   console.log(`  PROJECT_NAME=${path.basename(path.resolve(targetDir))} yarn start`);
 }
 
@@ -137,15 +184,11 @@ function readJson(filePath) {
 
 function runDoctor(targetDir) {
   const directConfigPath = path.join(targetDir, "docusaurus.config.js");
-  const docsDir = fs.existsSync(directConfigPath)
-    ? targetDir
-    : path.join(targetDir, "documentation");
+  const docsDir = fs.existsSync(directConfigPath) ? targetDir : path.join(targetDir, "documentation");
   const packageJsonPath = path.join(docsDir, "package.json");
   const configPath = path.join(docsDir, "docusaurus.config.js");
   const packageJson = readJson(packageJsonPath);
-  const configContents = fs.existsSync(configPath)
-    ? fs.readFileSync(configPath, "utf8")
-    : "";
+  const configContents = fs.existsSync(configPath) ? fs.readFileSync(configPath, "utf8") : "";
   const checks = [
     {
       label: "documentation folder exists",
@@ -196,8 +239,6 @@ function runDoctor(targetDir) {
   console.log("\nDoctor found no obvious package-runtime setup issues.");
 }
 
-// -------------------- Command routing --------------------
-
 if (cmd === "add" || cmd === "init") {
   const targetDir = path.resolve(getArgValue("--path") || process.cwd());
 
@@ -224,7 +265,7 @@ if (cmd === "doctor") {
 if (cmd === "new") {
   const projectName = args[1];
   if (!projectName || projectName.startsWith("-")) {
-    console.error(`Missing project name.\n`);
+    console.error("Missing project name.\n");
     usage();
     process.exit(1);
   }
@@ -235,13 +276,13 @@ if (cmd === "new") {
     if (!force) {
       console.error(
         `Directory already exists:\n  ${targetDir}\n` +
-          `Refusing to overwrite. Re-run with --force to use it anyway.`
+          "Refusing to overwrite. Re-run with --force to use it anyway."
       );
       process.exit(1);
     }
   } else {
     console.log(`Creating project directory: ${targetDir}`);
-    fs.mkdirSync(targetDir, { recursive: true });
+    fs.mkdirSync(targetDir, {recursive: true});
   }
 
   ensureDirExists(targetDir);

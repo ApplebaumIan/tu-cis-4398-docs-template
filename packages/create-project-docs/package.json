@@ -1,0 +1,35 @@
+{
+  "name": "create-project-docs",
+  "version": "2.0.1",
+  "description": "Scaffold and diagnose Temple University CIS project documentation sites.",
+  "license": "UNLICENSED",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApplebaumIan/tu-cis-4398-docs-template.git",
+    "directory": "packages/create-project-docs"
+  },
+  "homepage": "https://github.com/ApplebaumIan/tu-cis-4398-docs-template#readme",
+  "bugs": {
+    "url": "https://github.com/ApplebaumIan/tu-cis-4398-docs-template/issues"
+  },
+  "keywords": [
+    "docusaurus",
+    "temple-university",
+    "cis",
+    "project-docs",
+    "capstone",
+    "scaffold"
+  ],
+  "bin": {
+    "create-project-docs": "./bin.js"
+  },
+  "files": [
+    "bin.js",
+    "package.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

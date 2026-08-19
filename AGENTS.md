@@ -27,7 +27,7 @@ The best solution is usually the one that keeps student-facing authoring simple 
 
 ## Repository Map
 
-The Docusaurus application lives under:
+The student-facing Docusaurus application lives under:
 
 ```text
 documentation/
@@ -37,23 +37,31 @@ Important areas:
 
 ```text
 documentation/
-├── .bin/                 # create-project-docs CLI
 ├── docs/                 # student project documentation scaffold
-├── plugins/              # local Docusaurus plugins
 ├── scripts/              # generation/build utilities
 ├── src/
-│   ├── components/       # reusable student-facing MDX/React components
-│   ├── css/              # global presentation
+│   ├── css/              # optional project/local CSS overrides
 │   ├── pages/            # application-level pages, including homepage
-│   └── theme/            # Docusaurus theme overrides/swizzles
 ├── static/               # static assets and OpenAPI files
-├── tutorial/             # help/documentation for using this template
 ├── docusaurus.config.js
 ├── package.json
 └── sidebars.js
 ```
 
-The repository root also contains GitHub Actions and development-container configuration.
+Reusable runtime and scaffolding behavior lives under:
+
+```text
+packages/
+├── docusaurus/           # reusable Docusaurus runtime package
+│   ├── src/components/   # student-facing MDX/React component APIs
+│   ├── src/theme/        # Docusaurus theme overrides/swizzles
+│   ├── src/plugins/      # reusable Docusaurus plugins
+│   ├── styles/           # shared default CSS
+│   └── tutorial/         # help/documentation for using this template
+└── create-project-docs/  # scaffold, doctor, and future migration CLI
+```
+
+The repository root also contains GitHub Actions, workspace configuration, and development-container configuration.
 
 Before proposing a significant change, inspect the current implementation. Do not assume stock Docusaurus behavior.
 
@@ -83,7 +91,7 @@ Examples include:
 - API specifications;
 - project overview.
 
-### `documentation/tutorial/`
+### `packages/docusaurus/tutorial/`
 
 Help content explaining how to use Docusaurus and the custom functionality provided by this template.
 
@@ -142,13 +150,13 @@ Use this progression:
 2. **Template help content** — `tutorial/`
 3. **Plain Markdown**
 4. **Mermaid**
-5. **Reusable MDX/React component** — `src/components/`
-6. **Presentation/CSS** — `src/css/`
+5. **Reusable MDX/React component** — `packages/docusaurus/src/components/`
+6. **Shared presentation/CSS** — `packages/docusaurus/styles/`; project overrides in `documentation/src/css/`
 7. **Application-level page** — `src/pages/`
 8. **Supported Docusaurus configuration** — `docusaurus.config.js`
-9. **Theme override/swizzle** — `src/theme/`
-10. **Build-time/plugin behavior** — `plugins/` or `scripts/`
-11. **Installation behavior** — `.bin/`
+9. **Theme override/swizzle** — `packages/docusaurus/src/theme/`
+10. **Build-time/plugin behavior** — `packages/docusaurus/src/plugins/` or `documentation/scripts/`
+11. **Installation behavior** — `packages/create-project-docs/`
 12. **Deployment/CI behavior** — `.github/workflows/`
 
 Do not solve a content problem with a theme override or a CSS problem with a plugin.
@@ -173,7 +181,7 @@ Use React when it adds meaningful reusable behavior, not merely custom styling.
 
 ## Components Are a Student-Facing API
 
-`documentation/src/components/` is effectively a component library for student authors.
+`packages/docusaurus/src/components/` is effectively a component library for student authors.
 
 Existing component areas include:
 
@@ -209,7 +217,7 @@ If students need a long React explanation to use a component, simplify its API.
 
 ## Theme Overrides Are High-Cost
 
-The repository already overrides Docusaurus behavior under `documentation/src/theme/`.
+The repository already overrides Docusaurus behavior under `packages/docusaurus/src/theme/`.
 
 Theme overrides increase upgrade risk because they depend on Docusaurus internals.
 
