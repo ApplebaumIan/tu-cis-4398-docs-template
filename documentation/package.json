@@ -37,9 +37,9 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/types": "3.9.2",
-    "@tu-cis-courses/create-project-docs": "1.0.0-beta.1",
+    "@tu-cis-courses/create-project-docs": "1.0.0-next.2",
     "@tu-cis-courses/docs-content-template": "1.0.0-beta.1",
-    "@tu-cis-courses/docusaurus-template": "1.0.0-beta.1"
+    "@tu-cis-courses/docusaurus-template": "1.0.0-next.2"
   },
   "resolutions": {
     "webpack": "5.101.3",

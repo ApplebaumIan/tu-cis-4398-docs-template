@@ -2779,13 +2779,13 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tu-cis-courses/create-project-docs@1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@tu-cis-courses/create-project-docs/-/create-project-docs-1.0.0-beta.1.tgz#b9f961962d4c01744fec1a5b350108b942a7d4fe"
-  integrity sha512-1y+9/1EyTw5xSawar+ckX7SzNQpAT4jXARNlc66WCiyygQzf9u4IoABL/svArEqOb/b6a26UDbEfIr5e1piGtQ==
+"@tu-cis-courses/create-project-docs@1.0.0-next.2":
+  version "1.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@tu-cis-courses/create-project-docs/-/create-project-docs-1.0.0-next.2.tgz#877b264485f3440ca68bcb756892551715a477a8"
+  integrity sha512-YmYfHD4ZV1vBu0ZuwC/T9WqGnwj6w9HoammBpO6+lVzJABRILQalH38HnY0wAJAr/D48jDQzYXCvSqS+ITNBmw==
   dependencies:
     "@tu-cis-courses/docs-content-template" "1.0.0-beta.1"
-    "@tu-cis-courses/docusaurus-template" "1.0.0-beta.1"
+    "@tu-cis-courses/docusaurus-template" "1.0.0-next.2"
     semver "^7.7.2"
 
 "@tu-cis-courses/docs-content-template@1.0.0-beta.1":
@@ -2811,10 +2811,10 @@
     redocusaurus "^2.5.2"
     styled-components "^6.0.5"
 
-"@tu-cis-courses/docusaurus-template@1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-template/-/docusaurus-template-1.0.0-beta.1.tgz#affa2862216ed9c8edd55ad8423d07fdc21eb1ab"
-  integrity sha512-6zNeDX9hm3WCNCbcuqCMNJHpNgLmPHo0Wya2QektE31gqf/VT1pPPuAWJ+2aCqRsUnk6JfOeMsvQJyM1ETFytA==
+"@tu-cis-courses/docusaurus-template@1.0.0-next.2":
+  version "1.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-template/-/docusaurus-template-1.0.0-next.2.tgz#c0743c3c51877f403d503cc5cfc0bdb3d3ac28a5"
+  integrity sha512-EGXDPIsSP6JyaG6HT7DA0PtlKKW62zwUH62uwT1JrjzAkw043i6JhqnDVZrS/OBMewaUPgFG25f58fieKkRTNw==
 
 "@types/body-parser@*":
   version "1.19.6"

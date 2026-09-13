@@ -30,4 +30,9 @@ jobs:
           ORG_NAME: ${{ github.repository_owner }}
           PROJECT_NAME: ${{ github.event.repository.name }}
           GIT_USER: github-actions[bot]
-        run: yarn deploy
+          GIT_PASS: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git ls-remote --exit-code --heads origin gh-pages || git push origin HEAD:gh-pages
+          yarn deploy
