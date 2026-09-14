@@ -2,133 +2,133 @@
   "schemaVersion": 1,
   "channel": "next",
   "packages": {
-    "template": "1.0.0-next.3",
+    "template": "1.0.0-next.4",
     "content": "1.0.0-beta.1",
     "components": "1.0.0-beta.1",
     "preset": "1.0.0-next.2",
-    "cli": "1.0.0-next.3"
+    "cli": "1.0.0-next.4"
   },
   "packageTargets": {},
   "sections": {},
   "files": {
     ".devcontainer/devcontainer.json": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "a7b59da593b363de1664c995476eb4e014ac936ab6f7774623183389109980ac"
     },
     ".github/workflows/deploy.yml": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "20716d046f028149470441242757aae0e2466b46371552bd0e776572fceb2c19"
     },
     "documentation/babel.config.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "599159185d1c4b953d9603f93fdf9a23a4f20fb78d03ae8bf4de77043969332e"
     },
     "documentation/docusaurus.config.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "b97e5d43e916d6826fb49fef98f8003574d462cd1f1df5342496ff3dae2745a9"
     },
     "documentation/package.json": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
-      "sourceHash": "b22461bbfb307d9ae7383992b9d617bd1a2f24839805963bdc8e98e3045fb5f2"
+      "sourceVersion": "1.0.0-next.4",
+      "sourceHash": "9b7f79eef927aac590cd68c85beb5a657aa899779d9ba8251d03ac0c980d9985"
     },
     "documentation/sidebars.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "6d6972a7d53059d11982218b35006012531083cef524fab0f7bf7d3aa6d87cde"
     },
     "documentation/src/components/Contributors/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "bbab824fce4c5b9ca858dcff7f371479eea9c322773a858dc512b8b3b8bd4788"
     },
     "documentation/src/components/Figure/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "3ddbb8491ecd116e271e498a5c5f2c365aaa511c9f45078639fc97994e444b61"
     },
     "documentation/src/components/InlineDocs/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "30aa461e378474f608267f47effe4e8bbe9deb0eb02dc5e68cd42df539bb7922"
     },
     "documentation/src/components/ReademeMD/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "34e4ac04aa8f7fc2c99d359ef4985ee6f71a6b15865f0e715dbb9c62a2c4bf75"
     },
     "documentation/src/components/RevisionHistory/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "b531788d706c95cd12820ef14a740a42fca2f7e1b5637394e6c87fde3d735a04"
     },
     "documentation/src/components/ZoomableMedia/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "1707dca01b4974fdc937211a5fc8f417cac1a2b3d41113011063034032784a00"
     },
     "documentation/src/css/custom.css": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "83248490689577ade9b0c989b6c71fb40de134683911b2214e3b16ac9b11591b"
     },
     "documentation/src/pages/index.js": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "b13c80530f3eaa804313cdb74bc7b7821433a48304a4d391d95c877b2c9017b0"
     },
     "documentation/src/pages/index.module.css": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "0ff2efaddfb2892ad71a2f5a10ce2d82d0b09e9067e3c4bac49d60ec464c46f9"
     },
     "documentation/static/.nojekyll": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "documentation/static/img/docusaurus.png": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
-      "sourceHash": "105d46e374583274b75a505f9a74bd5d11b9038d03439ce91266b6515de4a677"
+      "sourceVersion": "1.0.0-next.4",
+      "sourceHash": "9204212d3905bc1b8d1d882825d1eceb5ad942329222277d7257831a7d47d827"
     },
     "documentation/static/img/favicon.ico": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
-      "sourceHash": "215aad4a87df366549d4b9c99663471b4cbb02470fa03f6c533f928be7e15eb1"
+      "sourceVersion": "1.0.0-next.4",
+      "sourceHash": "7fe55819f14792d942d86092f519b6d425e995337b482a8743e363cf5ac0ae30"
     },
     "documentation/static/img/logo.svg": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "95e99401d61eb2adab1567aab22a0362908e2e25108421d207f8afa4e1e052f2"
     },
     "documentation/static/img/undraw_docusaurus_mountain.svg": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "5d63a81ff3dd5ea266e99156f8e33f76cc02df0f04e1a4487240663704660b7f"
     },
     "documentation/static/img/undraw_docusaurus_react.svg": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "1f2c1d7bcdd4219c9869d94b45c052e2856464e91c3e0704d99b4714d32cc668"
     },
     "documentation/static/img/undraw_docusaurus_tree.svg": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "09704d88ef849647bf2ee02a4cb1b1b413f000de059a8d794019238ef2c5e4a7"
     },
     "documentation/static/sampleDocs/index.html": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "83a53b93fc77ce7080b1cd668f4c29bd500993ccc0674192303bc1836d914eae"
     },
     ".gitignore": {
       "owner": "template",
-      "sourceVersion": "1.0.0-next.3",
+      "sourceVersion": "1.0.0-next.4",
       "sourceHash": "c9a0f09081fa789b6f633301588cf79d9f3d038954ccd82f54bd428970411934"
     },
     "README.md": {
