@@ -2779,13 +2779,13 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tu-cis-courses/create-project-docs@1.0.0-next.4":
-  version "1.0.0-next.4"
-  resolved "https://registry.yarnpkg.com/@tu-cis-courses/create-project-docs/-/create-project-docs-1.0.0-next.4.tgz#4b2bb6edbbfae0e1df77e506655540a3305d49f9"
-  integrity sha512-cDkLn2/LnIDDM2z9IVMKSWAHVB46BdjK5PqY0JWIf9qui0EpsrOlbc+VypUWzdnQsEXqxxLwZid24kfjbUZ69Q==
+"@tu-cis-courses/create-project-docs@1.0.0-next.5":
+  version "1.0.0-next.5"
+  resolved "https://registry.yarnpkg.com/@tu-cis-courses/create-project-docs/-/create-project-docs-1.0.0-next.5.tgz#74900282121a744ae10a5dabc1cb01db23df6de9"
+  integrity sha512-SUDTFJnz8J0pxGv/SQNkHYSNg23mRcD1yfmDosNd2huAFmNnFtjFTlMfjHaZqY3qLOz/Vayaj4o3CjtvRnh66Q==
   dependencies:
     "@tu-cis-courses/docs-content-template" "1.0.0-beta.1"
-    "@tu-cis-courses/docusaurus-template" "1.0.0-next.4"
+    "@tu-cis-courses/docusaurus-template" "1.0.0-next.5"
     semver "^7.7.2"
 
 "@tu-cis-courses/docs-content-template@1.0.0-beta.1":
@@ -2800,10 +2800,10 @@
   dependencies:
     react-zoom-pan-pinch "^4.0.3"
 
-"@tu-cis-courses/docusaurus-preset@1.0.0-next.2":
-  version "1.0.0-next.2"
-  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-preset/-/docusaurus-preset-1.0.0-next.2.tgz#6fadbda29c495ffa7a709630e17c8ffdf9db3c3b"
-  integrity sha512-OQxeVhfEC1nR6AwK3sJJd0m9wbhK2q82t3b96MdqSqZyYyxYo/hso62iOPaQyESUG5UoCkZOauvUsAGawqwK7A==
+"@tu-cis-courses/docusaurus-preset@1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-preset/-/docusaurus-preset-1.0.0-next.3.tgz#54bd4d920282b2de137cd518df0c8aa82197bb9d"
+  integrity sha512-UTO+Byxwi5MkNYjVgGS9yCDpPMjzJ/rXG3qcDKdfyuAy/iCKnrDMS2fv7poTukmtDokRHGSPa8Nyfg4G14Wsrw==
   dependencies:
     "@tu-cis-courses/docusaurus-components" "^1.0.0-beta.1"
     core-js "^3.1.4"
@@ -2811,10 +2811,10 @@
     redocusaurus "^2.5.2"
     styled-components "^6.0.5"
 
-"@tu-cis-courses/docusaurus-template@1.0.0-next.4":
-  version "1.0.0-next.4"
-  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-template/-/docusaurus-template-1.0.0-next.4.tgz#2d7a48566a1d12aa646504785c51e7c6e777dbba"
-  integrity sha512-57x7hG8CJ6dH3u/8Nb780uYFj9AA7am5bgGKFviuwW16+ynqdwuBgl6fK4kNSFXKXIOaoHa2Q5uLl7sPBYLU0Q==
+"@tu-cis-courses/docusaurus-template@1.0.0-next.5":
+  version "1.0.0-next.5"
+  resolved "https://registry.yarnpkg.com/@tu-cis-courses/docusaurus-template/-/docusaurus-template-1.0.0-next.5.tgz#a27d180d5650cf75d0414e91f6094f3cc34e07d3"
+  integrity sha512-kn7nCuTGE8wOC+NoMvQs1/8gpQuOpLe3e/hZW7pwOdv+z8Lrlg1dKHj3/OqxFENOhP4PlD5efdNCpX9b6NpEwQ==
 
 "@types/body-parser@*":
   version "1.19.6"
@@ -3221,11 +3221,11 @@
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
 "@types/node@*":
-  version "26.6.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.6.0.tgz#61778795a7c1110c4862715831c2cabdff5595b2"
-  integrity sha512-FWWQhDlKSnEJVe+CTJCQL8Fol7s1MKo3Ud0fjryxoOoH+hwMIPxol0MguYrLi2I0VvIFwOU2DwdWET2+px15qg==
+  version "22.20.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.20.3.tgz#f77d48b4cb336b4e6dc44850ddb6da69caade396"
+  integrity sha512-DZmzkmwHzXrLPAXPyKNDzlIwMMUZCVacoD25ywdy5YTKGbOx/2ld+Q38Im2zJ0vBuZP5Prd3VZutKZyXwkOS8A==
   dependencies:
-    undici-types "~8.9.0"
+    undici-types "~6.21.0"
 
 "@types/node@^17.0.5":
   version "17.0.45"
@@ -10441,10 +10441,10 @@ ufo@^1.6.3:
   resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.6.4.tgz#7a8fb875fcc6382d2c7d0b3692738b0500a92467"
   integrity sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==
 
-undici-types@~8.9.0:
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-8.9.0.tgz#e240d97c8b5d85e5347ce73d25865c7906c1ec9f"
-  integrity sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==
+undici-types@~6.21.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.21.0.tgz#691d00af3909be93a7faa13be61b3a5b50ef12cb"
+  integrity sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.1"
